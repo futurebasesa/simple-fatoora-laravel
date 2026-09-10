@@ -173,6 +173,7 @@ $created = $simpleFatoora->clients()->create(new ClientCreateData(
     email: 'customer@example.com',
     address: 'Riyadh',
 ))->response;
+$clientId = $created['user_id'];
 
 $simpleFatoora->clients()->update(new ClientUpdateData(
     id: $clientId,
@@ -437,6 +438,10 @@ composer format:check
 composer contract
 ```
 
+Maintainers can also run the opt-in `tools/staging-smoke.php` check against a dedicated,
+non-production Simple Fatoora test account. It reads protected configuration from standard input,
+does not print response data, cleans up mutable records, and never runs as part of ordinary pull-request CI.
+
 The bundled OpenAPI snapshot is compared with every exposed endpoint. A separate contract command can compare a newly downloaded official document without making ordinary pull-request tests depend on API availability:
 
 ```bash
@@ -453,5 +458,5 @@ Do not post API keys, credentials, invoice contents, or customer data in a publi
 
 - [Simple Fatoora integration and API documentation](https://simplefatoora.com/en/integration)
 - [OpenAPI document](https://simplefatoora.com/developers/openapi.json)
-- [Simple Fatoora contact page](https://simplefatoora.com/en/contact-us)
+- [Simple Fatoora contact page](https://simplefatoora.com/en/contactus)
 - [GitHub issues](https://github.com/futurebasesa/simple-fatoora-laravel/issues)

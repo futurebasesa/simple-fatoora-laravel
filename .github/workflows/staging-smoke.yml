@@ -1,0 +1,32 @@
+name: Staging smoke test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Controlled staging API smoke test
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run staging smoke test
+        env:
+          SIMPLE_FATOORA_STAGING_BASE_URL: ${{ secrets.SIMPLE_FATOORA_STAGING_BASE_URL }}
+          SIMPLE_FATOORA_STAGING_API_KEY: ${{ secrets.SIMPLE_FATOORA_STAGING_API_KEY }}
+          SIMPLE_FATOORA_STAGING_SANDBOX_API_KEY: ${{ secrets.SIMPLE_FATOORA_STAGING_SANDBOX_API_KEY }}
+        run: |
+          php -r '$values = ["base_url" => getenv("SIMPLE_FATOORA_STAGING_BASE_URL"), "api_key" => getenv("SIMPLE_FATOORA_STAGING_API_KEY"), "sandbox_api_key" => getenv("SIMPLE_FATOORA_STAGING_SANDBOX_API_KEY")]; fwrite(STDOUT, json_encode($values, JSON_THROW_ON_ERROR));' | php tools/staging-smoke.php
