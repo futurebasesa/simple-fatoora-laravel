@@ -132,8 +132,7 @@ jobs:
       - name: Install package from this checkout
         working-directory: ${{ runner.temp }}/simplefatoora-smoke
         run: |
-          composer config repositories.simplefatoora path "$GITHUB_WORKSPACE"
-          composer config repositories.simplefatoora.options.symlink false
+          composer config repositories.simplefatoora "{\"type\":\"path\",\"url\":\"$GITHUB_WORKSPACE\",\"options\":{\"symlink\":false}}" --json
           composer require simplefatoora/laravel:@dev --prefer-dist --no-interaction --no-progress
 
       - name: Publish and verify Laravel integration

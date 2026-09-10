@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Http;
-use RuntimeException;
 use SimpleFatoora\Laravel\Facades\SimpleFatoora;
 use SimpleFatoora\Laravel\SimpleFatooraClient;
 

@@ -1048,7 +1048,7 @@
         "summary": "Create invoice or document",
         "description": "Creates a simplified invoice, standard invoice, purchase invoice, credit note, or debit note. Credit and debit notes require the parent document's invoice_number as parent_invoice_number. ZATCA processing follows the account and API-key environment. To convert an existing quotation, also send its id as draft_id, set created_type to quotation, and use quotation:{id} as source_uid. Repeating that same quotation conversion returns the original document instead of creating a duplicate.",
         "x-ar-summary": "إنشاء فاتورة أو مستند",
-        "x-ar-description": "ينشئ فاتورة مبسطة أو قياسية أو فاتورة مشتريات أو إشعارًا دائنًا أو مدينًا. تتم معالجة زاتكا حسب إعداد الحساب وبيئة مفتاح API.",
+        "x-ar-description": "ينشئ فاتورة مبسطة أو قياسية أو فاتورة مشتريات أو إشعارًا دائنًا أو مدينًا. تتطلب الإشعارات الدائنة والمدينة إرسال invoice_number للمستند الأصلي في parent_invoice_number. تتم معالجة زاتكا حسب إعداد الحساب وبيئة مفتاح API. لتحويل عرض سعر قائم، أرسل كذلك معرّفه في draft_id، واضبط created_type على quotation واستخدم quotation:{id} في source_uid. تؤدي إعادة طلب التحويل نفسه إلى إرجاع المستند الأصلي بدلًا من إنشاء نسخة مكررة.",
         "operationId": "createInvoice",
         "requestBody": {
           "required": true,
