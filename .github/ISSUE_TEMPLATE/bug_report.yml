@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a reproducible problem in the Laravel package.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Do not include API keys, credentials, customer data, invoice contents, or private logs. Report security issues through the Security tab.
+  - type: input
+    id: package-version
+    attributes:
+      label: Package version
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: input
+    id: laravel-version
+    attributes:
+      label: Laravel version
+      placeholder: 13.x
+    validations:
+      required: true
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+      placeholder: 8.5.x
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Explain the expected and actual behavior without sensitive data.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide the smallest safe code example that demonstrates the issue.
+    validations:
+      required: true

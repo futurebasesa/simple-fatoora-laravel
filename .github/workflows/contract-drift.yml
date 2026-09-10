@@ -1,0 +1,35 @@
+name: Contract Drift
+
+on:
+  workflow_dispatch:
+    inputs:
+      openapi_url:
+        description: Official public OpenAPI JSON URL
+        required: true
+        default: https://simplefatoora.com/developers/openapi.json
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Download official contract
+        run: curl --fail --silent --show-error --location --max-time 30 "${{ inputs.openapi_url }}" --output "$RUNNER_TEMP/openapi.json"
+
+      - name: Compare endpoint and request contract
+        run: php tools/compare-openapi.php resources/openapi.json "$RUNNER_TEMP/openapi.json"

@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace SimpleFatoora\Laravel\Data;
+
+use InvalidArgumentException;
+use SimpleFatoora\Laravel\Contracts\ArrayPayload;
+use SimpleFatoora\Laravel\Support\Payload;
+
+final readonly class ListOptions implements ArrayPayload
+{
+    public function __construct(
+        public ?int $page = null,
+        public ?int $perPage = null,
+        public ?int $limit = null,
+        public ?string $searchKey = null,
+    ) {
+        foreach (['page' => $page, 'perPage' => $perPage, 'limit' => $limit] as $name => $value) {
+            if ($value !== null && $value < 1) {
+                throw new InvalidArgumentException("{$name} must be at least 1.");
+            }
+        }
+    }
+
+    public function toArray(): array
+    {
+        return Payload::withoutNulls([
+            'page' => $this->page,
+            'per_page' => $this->perPage,
+            'limit' => $this->limit,
+            'search_key' => $this->searchKey,
+        ]);
+    }
+}

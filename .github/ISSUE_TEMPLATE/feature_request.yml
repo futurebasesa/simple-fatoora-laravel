@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest a focused improvement to the public Laravel package.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: Describe the developer problem and why the existing public methods do not solve it.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed interface
+      description: Show the Laravel-facing API you would expect, if applicable.
+    validations:
+      required: true
+  - type: checkboxes
+    id: public-contract
+    attributes:
+      label: Public API scope
+      options:
+        - label: This request concerns a supported public Simple Fatoora API capability.
+          required: true

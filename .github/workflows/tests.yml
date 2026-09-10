@@ -1,0 +1,143 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  compatibility:
+    name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '8.2'
+            laravel: '12'
+            illuminate: '^12.0'
+            testbench: '^10.0'
+          - php: '8.3'
+            laravel: '12'
+            illuminate: '^12.0'
+            testbench: '^10.0'
+          - php: '8.4'
+            laravel: '12'
+            illuminate: '^12.0'
+            testbench: '^10.0'
+          - php: '8.5'
+            laravel: '12'
+            illuminate: '^12.0'
+            testbench: '^10.0'
+          - php: '8.3'
+            laravel: '13'
+            illuminate: '^13.0'
+            testbench: '^11.0'
+          - php: '8.4'
+            laravel: '13'
+            illuminate: '^13.0'
+            testbench: '^11.0'
+          - php: '8.5'
+            laravel: '13'
+            illuminate: '^13.0'
+            testbench: '^11.0'
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Select Laravel compatibility set
+        run: >-
+          composer require --dev --no-update --no-interaction
+          illuminate/contracts:${{ matrix.illuminate }}
+          illuminate/http:${{ matrix.illuminate }}
+          illuminate/support:${{ matrix.illuminate }}
+          orchestra/testbench:${{ matrix.testbench }}
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-interaction --no-progress
+
+      - name: Run tests
+        run: composer test
+
+  quality:
+    name: Quality and security
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: none
+          tools: composer:v2
+
+      - name: Validate Composer metadata
+        run: composer validate --no-check-publish
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Check coding style
+        run: composer format:check
+
+      - name: Run static analysis
+        run: composer analyse
+
+      - name: Check bundled contract
+        run: composer contract
+
+      - name: Audit dependencies
+        run: composer audit
+
+  fresh-application:
+    name: Fresh Laravel ${{ matrix.laravel }} / PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '8.2'
+            laravel: '12'
+            framework: '^12.0'
+          - php: '8.5'
+            laravel: '13'
+            framework: '^13.0'
+    steps:
+      - name: Check out package
+        uses: actions/checkout@v7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Create a clean Laravel application
+        run: composer create-project laravel/laravel:${{ matrix.framework }} "$RUNNER_TEMP/simplefatoora-smoke" --prefer-dist --no-interaction --no-progress
+
+      - name: Install package from this checkout
+        working-directory: ${{ runner.temp }}/simplefatoora-smoke
+        run: |
+          composer config repositories.simplefatoora path "$GITHUB_WORKSPACE"
+          composer config repositories.simplefatoora.options.symlink false
+          composer require simplefatoora/laravel:@dev --prefer-dist --no-interaction --no-progress
+
+      - name: Publish and verify Laravel integration
+        working-directory: ${{ runner.temp }}/simplefatoora-smoke
+        run: |
+          php artisan vendor:publish --tag=simplefatoora-config --force
+          php "$GITHUB_WORKSPACE/tools/verify-fresh-app.php" "$PWD"

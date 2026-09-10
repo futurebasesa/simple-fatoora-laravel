@@ -1,0 +1,3077 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Simple Fatoora API",
+    "version": "V1",
+    "description": "API reference for account access, business profiles, clients, products, invoices, quotations, reports, and ZATCA Phase 2.",
+    "x-ar-title": "Simple Fatoora API",
+    "x-ar-description": "مرجع API للحسابات وبيانات المنشأة والعملاء والمنتجات والفواتير وعروض الأسعار والتقارير وربط ZATCA Phase 2."
+  },
+  "servers": [
+    {
+      "url": "/v1",
+      "description": "Simple Fatoora API V1",
+      "x-ar-description": "Simple Fatoora API V1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Account & Access",
+      "description": "Register accounts, verify email addresses, recover API keys, and reset passwords.",
+      "x-ar-name": "الحساب والوصول",
+      "x-ar-description": "إنشاء الحسابات والتحقق من البريد الإلكتروني واسترجاع مفاتيح API وتحديث كلمة المرور."
+    },
+    {
+      "name": "Business Profile",
+      "description": "Read and update the business and invoice profile.",
+      "x-ar-name": "ملف المنشأة",
+      "x-ar-description": "قراءة وتحديث بيانات المنشأة وإعدادات الفواتير."
+    },
+    {
+      "name": "Clients",
+      "description": "Create and manage customer records.",
+      "x-ar-name": "العملاء",
+      "x-ar-description": "إنشاء سجلات العملاء وإدارتها."
+    },
+    {
+      "name": "Products",
+      "description": "Find products previously used by the account.",
+      "x-ar-name": "المنتجات",
+      "x-ar-description": "البحث في المنتجات المستخدمة سابقًا في الحساب."
+    },
+    {
+      "name": "Invoices & Documents",
+      "description": "Create invoices and retrieve issued documents.",
+      "x-ar-name": "الفواتير والمستندات",
+      "x-ar-description": "إنشاء الفواتير واسترجاع المستندات الصادرة."
+    },
+    {
+      "name": "Quotations",
+      "description": "Create, update, retrieve, download, and delete quotations.",
+      "x-ar-name": "عروض الأسعار",
+      "x-ar-description": "إنشاء عروض الأسعار وتحديثها واسترجاعها وتنزيلها وحذفها."
+    },
+    {
+      "name": "Reports",
+      "description": "Retrieve dashboard, sales, and VAT report data.",
+      "x-ar-name": "التقارير",
+      "x-ar-description": "استرجاع بيانات لوحة المعلومات والمبيعات والإقرار الضريبي."
+    },
+    {
+      "name": "ZATCA Phase 2",
+      "description": "Manage the ZATCA Phase 2 onboarding lifecycle.",
+      "x-ar-name": "زاتكا المرحلة الثانية",
+      "x-ar-description": "إدارة دورة ربط المنشأة مع متطلبات زاتكا للمرحلة الثانية."
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/users/registration_intent": {
+      "post": {
+        "tags": [
+          "Account & Access"
+        ],
+        "summary": "Create registration intent",
+        "description": "Starts the email-verified account registration flow and returns a registration intent.",
+        "x-ar-summary": "بدء تسجيل حساب",
+        "x-ar-description": "يبدأ مسار إنشاء الحساب المعتمد على التحقق من البريد الإلكتروني ويعيد رمز التسجيل.",
+        "operationId": "createRegistrationIntent",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationIntentRequest"
+              },
+              "example": {
+                "registration_data": {
+                  "email_id": "developer@example.com",
+                  "password": "example-password",
+                  "confirm_password": "example-password",
+                  "company_name": "Example Company",
+                  "terms_and_conditions": 1,
+                  "address": "Riyadh",
+                  "source": "api"
+                },
+                "registration_journey_id": "your-unique-registration-id"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "registration_intent": "registration-intent-token",
+                    "expires_in": 86400
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/email_send_otp": {
+      "post": {
+        "tags": [
+          "Account & Access"
+        ],
+        "summary": "Send email OTP",
+        "description": "Sends a one-time verification code to the supplied email address.",
+        "x-ar-summary": "إرسال رمز التحقق للبريد",
+        "x-ar-description": "يرسل رمز تحقق لمرة واحدة إلى عنوان البريد الإلكتروني المحدد.",
+        "operationId": "sendEmailOtp",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailRequest"
+              },
+              "example": {
+                "email_id": "developer@example.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "OTP sent successfully",
+                    "is_register": false
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/email_verify_otp": {
+      "post": {
+        "tags": [
+          "Account & Access"
+        ],
+        "summary": "Verify email OTP",
+        "description": "Verifies the code sent to the email address. The verification is valid for the registration or password-reset flow.",
+        "x-ar-summary": "التحقق من رمز البريد",
+        "x-ar-description": "يتحقق من الرمز المرسل إلى البريد الإلكتروني لاستخدامه في إنشاء الحساب أو تحديث كلمة المرور.",
+        "operationId": "verifyEmailOtp",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailOtpRequest"
+              },
+              "example": {
+                "email_id": "developer@example.com",
+                "otp": 123456
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "OTP verify successfully",
+                    "is_register": false
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/register_from_intent": {
+      "post": {
+        "tags": [
+          "Account & Access"
+        ],
+        "summary": "Complete registration",
+        "description": "Creates the account after email verification and returns the account's live and sandbox API keys.",
+        "x-ar-summary": "إكمال إنشاء الحساب",
+        "x-ar-description": "ينشئ الحساب بعد التحقق من البريد الإلكتروني ويعيد مفتاحي API للإنتاج والتجربة.",
+        "operationId": "completeRegistration",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteRegistrationRequest"
+              },
+              "example": {
+                "registration_intent": "registration-intent-from-first-step"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "Welcome to Simple Fatoora",
+                    "activation_method": "email_otp",
+                    "email_id": "developer@example.com",
+                    "first_name": "Developer",
+                    "last_name": "Account",
+                    "uuid": "session-uuid",
+                    "api_key": "live_api_key_example",
+                    "production_api_key": "live_api_key_example",
+                    "sandbox_api_key": "sandbox_api_key_example"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/validate_user": {
+      "post": {
+        "tags": [
+          "Account & Access"
+        ],
+        "summary": "Get API keys from credentials",
+        "description": "Validates account credentials and returns the live and sandbox API keys.",
+        "x-ar-summary": "استرجاع مفاتيح API ببيانات الحساب",
+        "x-ar-description": "يتحقق من بيانات الحساب ويعيد مفتاحي API للإنتاج والتجربة.",
+        "operationId": "getApiKeysFromCredentials",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CredentialsRequest"
+              },
+              "example": {
+                "user_name": "developer@example.com",
+                "user_pass": "example-password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "api_key": "live_api_key_example",
+                  "production_api_key": "live_api_key_example",
+                  "sandbox_api_key": "sandbox_api_key_example",
+                  "response": "Validated successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/validate_user_api_key": {
+      "post": {
+        "tags": [
+          "Account & Access"
+        ],
+        "summary": "Validate API key",
+        "description": "Validates one account API key and returns the account's live and sandbox API keys.",
+        "x-ar-summary": "التحقق من مفتاح API",
+        "x-ar-description": "يتحقق من أحد مفاتيح API للحساب ويعيد مفتاحي الإنتاج والتجربة.",
+        "operationId": "validateApiKey",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKeyValidationRequest"
+              },
+              "example": {
+                "api_key": "your-api-key"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "api_key": "live_api_key_example",
+                  "production_api_key": "live_api_key_example",
+                  "sandbox_api_key": "sandbox_api_key_example",
+                  "active_environment": "live",
+                  "response": "Validated successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/update_password": {
+      "post": {
+        "tags": [
+          "Account & Access"
+        ],
+        "summary": "Reset password",
+        "description": "Sets a new password using the password-reset UUID returned after email verification.",
+        "x-ar-summary": "تحديث كلمة المرور",
+        "x-ar-description": "يعيّن كلمة مرور جديدة باستخدام رمز تحديث كلمة المرور الناتج بعد التحقق من البريد.",
+        "operationId": "resetPassword",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordResetRequest"
+              },
+              "example": {
+                "uuid": "password-reset-uuid",
+                "password": "new-example-password",
+                "confirm_password": "new-example-password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "Password updated successfully",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/get_profile": {
+      "get": {
+        "tags": [
+          "Business Profile"
+        ],
+        "summary": "Get business profile",
+        "description": "Returns business details and invoice display settings for the authenticated account.",
+        "x-ar-summary": "استرجاع ملف المنشأة",
+        "x-ar-description": "يعيد بيانات المنشأة وإعدادات عرض الفواتير للحساب.",
+        "operationId": "getBusinessProfile",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "user_id": 123,
+                    "company_name": "Example Company",
+                    "email_id": "developer@example.com",
+                    "address": "Riyadh",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "tax_setup_status": "vat_registered",
+                    "tax_registration_status": "vat_registered",
+                    "is_vat_registered": true,
+                    "environment": "live",
+                    "is_sandbox": false,
+                    "production_api_key": "live_api_key_example",
+                    "sandbox_api_key": "sandbox_api_key_example",
+                    "send_mail": 1,
+                    "client_send_mail": 1
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/update_profile": {
+      "post": {
+        "tags": [
+          "Business Profile"
+        ],
+        "summary": "Update business profile",
+        "description": "Updates business details and supported invoice display settings.",
+        "x-ar-summary": "تحديث ملف المنشأة",
+        "x-ar-description": "يحدّث بيانات المنشأة وإعدادات عرض الفواتير المدعومة.",
+        "operationId": "updateBusinessProfile",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileUpdateRequest"
+              },
+              "example": {
+                "company_name": "Example Company",
+                "address": "Riyadh",
+                "company_registration_number": "1010000000",
+                "company_vat_number": "300000000000003",
+                "notes": "Thank you for your business",
+                "footer_text": "Example Company",
+                "send_mail": 1,
+                "client_send_mail": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "Profile updated successfully",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/upload_profile_image": {
+      "post": {
+        "tags": [
+          "Business Profile"
+        ],
+        "summary": "Upload company logo",
+        "description": "Uploads a JPEG, PNG, WebP, or GIF logo and applies it to the business profile.",
+        "x-ar-summary": "رفع شعار المنشأة",
+        "x-ar-description": "يرفع شعارًا بصيغة JPEG أو PNG أو WebP أو GIF ويضيفه إلى ملف المنشأة.",
+        "operationId": "uploadCompanyLogo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "url": "https://example.com/company-logo.png"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/client/kyc_category_list": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "List client categories",
+        "description": "Returns available client KYC categories.",
+        "x-ar-summary": "قائمة تصنيفات العملاء",
+        "x-ar-description": "يعيد تصنيفات العملاء المتاحة.",
+        "operationId": "listClientCategories",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "categories": [
+                      {
+                        "id": 1,
+                        "title": "Retail",
+                        "ar_title": "التجزئة",
+                        "position": 1,
+                        "status": 1
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/client/create": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Create client",
+        "description": "Creates a client record for future invoices and documents.",
+        "x-ar-summary": "إنشاء عميل",
+        "x-ar-description": "ينشئ سجل عميل لاستخدامه في الفواتير والمستندات.",
+        "operationId": "createClient",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientCreateRequest"
+              },
+              "example": {
+                "first_name": "Example Customer",
+                "email_id": "customer@example.com",
+                "mobile_number": "500000000",
+                "country_code": "+966",
+                "address": "Riyadh",
+                "company_registration_number": "1010000000",
+                "company_vat_number": "300000000000003"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "User created successfully",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/client/update": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Update client",
+        "description": "Updates an existing client record. Include the client id with the fields to change.",
+        "x-ar-summary": "تحديث عميل",
+        "x-ar-description": "يحدّث سجل عميل موجود. أرسل رقم العميل مع الحقول المطلوب تعديلها.",
+        "operationId": "updateClient",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientUpdateRequest"
+              },
+              "example": {
+                "id": 123,
+                "first_name": "Updated Customer",
+                "address": "Jeddah"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "User updated successfully",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/client/get_byid/{client_id}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get client",
+        "description": "Returns one client owned by the authenticated account.",
+        "x-ar-summary": "استرجاع عميل",
+        "x-ar-description": "يعيد بيانات عميل واحد تابع للحساب.",
+        "operationId": "getClient",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "id": 123,
+                    "user_id": 123,
+                    "first_name": "Example Customer",
+                    "email_id": "customer@example.com",
+                    "mobile_number": "500000000",
+                    "country_code": "+966",
+                    "address": "Riyadh",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "status": 1
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/client/get_all": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "List clients",
+        "description": "Returns clients owned by the authenticated account with optional pagination and search.",
+        "x-ar-summary": "قائمة العملاء",
+        "x-ar-description": "يعيد عملاء الحساب مع خيارات التصفح والبحث.",
+        "operationId": "listClients",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListRequest"
+              },
+              "example": {
+                "page": 1,
+                "per_page": 20,
+                "search_key": ""
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "users": [
+                      {
+                        "id": 123,
+                        "full_name": "Example Customer",
+                        "email_id": "customer@example.com",
+                        "mobile_number": "500000000",
+                        "country_code": "+966",
+                        "address": "Riyadh",
+                        "client_type": 2
+                      }
+                    ],
+                    "pagination_meta": {
+                      "current_page": 1,
+                      "pages": 1,
+                      "per_page": 20,
+                      "total": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/client/delete/{client_id}": {
+      "delete": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Delete client",
+        "description": "Deletes one client owned by the authenticated account.",
+        "x-ar-summary": "حذف عميل",
+        "x-ar-description": "يحذف عميلاً تابعًا للحساب.",
+        "operationId": "deleteClient",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "User deleted successfully"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/products/search": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Search products",
+        "description": "Searches previously used products by name or description.",
+        "x-ar-summary": "البحث في المنتجات",
+        "x-ar-description": "يبحث في المنتجات المستخدمة سابقًا بالاسم أو الوصف.",
+        "operationId": "searchProducts",
+        "parameters": [
+          {
+            "name": "search_key",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Product search text"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "products": [
+                      {
+                        "id": 123,
+                        "product_id": "P0001",
+                        "description": "Example item",
+                        "unit_price": 100,
+                        "vat_percent": 15,
+                        "last_used_on": "2026-08-30T20:41:45"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/products/list": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "List products",
+        "description": "Returns products previously used by the authenticated account.",
+        "x-ar-summary": "قائمة المنتجات",
+        "x-ar-description": "يعيد المنتجات المستخدمة سابقًا في الحساب.",
+        "operationId": "listProducts",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListRequest"
+              },
+              "example": {
+                "limit": 20
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "products": [
+                      {
+                        "id": 123,
+                        "product_id": "P0001",
+                        "description": "Example item",
+                        "unit_price": 100,
+                        "vat_percent": 15,
+                        "last_used_on": "2026-08-30T20:41:45"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/create": {
+      "post": {
+        "tags": [
+          "Invoices & Documents"
+        ],
+        "summary": "Create invoice or document",
+        "description": "Creates a simplified invoice, standard invoice, purchase invoice, credit note, or debit note. Credit and debit notes require the parent document's invoice_number as parent_invoice_number. ZATCA processing follows the account and API-key environment. To convert an existing quotation, also send its id as draft_id, set created_type to quotation, and use quotation:{id} as source_uid. Repeating that same quotation conversion returns the original document instead of creating a duplicate.",
+        "x-ar-summary": "إنشاء فاتورة أو مستند",
+        "x-ar-description": "ينشئ فاتورة مبسطة أو قياسية أو فاتورة مشتريات أو إشعارًا دائنًا أو مدينًا. تتم معالجة زاتكا حسب إعداد الحساب وبيئة مفتاح API.",
+        "operationId": "createInvoice",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceCreateRequest"
+              },
+              "example": {
+                "invoice_type": 0,
+                "client_type": 2,
+                "taxes_included": 0,
+                "client_name": "Example Customer",
+                "client_address": "Riyadh",
+                "client_email_id": "customer@example.com",
+                "reference_number": "POS-1001",
+                "invoice_detail": [
+                  {
+                    "description": "Example item",
+                    "unit_price": 100,
+                    "quantity": 1,
+                    "vat_percent_product": 15,
+                    "discount_percent": 0
+                  }
+                ],
+                "created_type": "api"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "Invoice created successfully",
+                    "id": 123,
+                    "invoice_number": "U123-1001",
+                    "invoice": "https://example.com/invoices/U123-1001.pdf",
+                    "pdf_ready": true,
+                    "pdf_download_url": "https://api.example.com/v1/invoice/pdf/123",
+                    "xml_available": true,
+                    "xml_archive_state": "reported",
+                    "xml_download_url": "https://api.example.com/v1/invoice/xml/123",
+                    "qrcode": "https://example.com/invoices/U123-1001-qr.png",
+                    "seller_name": "Example Company",
+                    "seller_vat_number": "300000000000003",
+                    "seller_address": "Riyadh",
+                    "vat": 15,
+                    "total": 115,
+                    "date_time": "2026-08-30 23:41:18",
+                    "environment": "live"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/get_all": {
+      "post": {
+        "tags": [
+          "Invoices & Documents"
+        ],
+        "summary": "List invoices and documents",
+        "description": "Returns documents for the API-key environment with pagination and filters.",
+        "x-ar-summary": "قائمة الفواتير والمستندات",
+        "x-ar-description": "يعيد مستندات بيئة مفتاح API مع خيارات التصفح والتصفية.",
+        "operationId": "listInvoices",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceListRequest"
+              },
+              "example": {
+                "page": 1,
+                "per_page": 20,
+                "include_all_invoice_types": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "invoices": [
+                      {
+                        "id": 123,
+                        "invoice_number": "U123-1001",
+                        "invoice_type": 0,
+                        "date_time": "2026-08-30 23:41:18",
+                        "reference_number": "POS-1001",
+                        "total": 115,
+                        "invoice": "https://example.com/invoices/U123-1001.pdf",
+                        "pdf_ready": true,
+                        "pdf_download_url": "https://api.example.com/v1/invoice/pdf/123",
+                        "xml_available": true,
+                        "xml_archive_state": "reported",
+                        "xml_download_url": "https://api.example.com/v1/invoice/xml/123",
+                        "environment": "live",
+                        "is_test": false
+                      }
+                    ],
+                    "pagination_meta": {
+                      "current_page": 1,
+                      "pages": 1,
+                      "per_page": 20,
+                      "total": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/get_byid/{document_id}": {
+      "get": {
+        "tags": [
+          "Invoices & Documents"
+        ],
+        "summary": "Get invoice or document",
+        "description": "Returns one document owned by the authenticated account.",
+        "x-ar-summary": "استرجاع فاتورة أو مستند",
+        "x-ar-description": "يعيد مستندًا واحدًا تابعًا للحساب.",
+        "operationId": "getInvoice",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "id": 123,
+                    "invoice_number": "U123-1001",
+                    "invoice_type": 0,
+                    "date_time": "2026-08-30 23:41:18",
+                    "reference_number": "POS-1001",
+                    "seller_name": "Example Company",
+                    "seller_vat_number": "300000000000003",
+                    "buyer_name": "Example Customer",
+                    "buyer_email_id": "customer@example.com",
+                    "sub_total": 100,
+                    "vat": 15,
+                    "total": 115,
+                    "invoice": "https://example.com/invoices/U123-1001.pdf",
+                    "qrcode": "https://example.com/invoices/U123-1001-qr.png",
+                    "pdf_ready": true,
+                    "pdf_download_url": "https://api.example.com/v1/invoice/pdf/123",
+                    "xml_available": true,
+                    "xml_archive_state": "reported",
+                    "xml_download_url": "https://api.example.com/v1/invoice/xml/123",
+                    "environment": "live",
+                    "invoice_details": [
+                      {
+                        "description": "Example item",
+                        "unit_price": 100,
+                        "quantity": 1,
+                        "vat_percent": 15,
+                        "vat": 15,
+                        "total": 115
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/pdf/{document_id}": {
+      "get": {
+        "tags": [
+          "Invoices & Documents"
+        ],
+        "summary": "Download invoice PDF",
+        "description": "Downloads the PDF for one issued document owned by the API-key account. Use download=1 for attachment disposition.",
+        "x-ar-summary": "تنزيل PDF للفاتورة",
+        "x-ar-description": "ينزّل ملف PDF لمستند صادر تابع لحساب مفتاح API. استخدم download=1 للتنزيل كمرفق.",
+        "operationId": "downloadInvoicePdf",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentId"
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "enum": [0, 1],
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF binary response",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "example": "%PDF binary document"
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/xml/{document_id}": {
+      "get": {
+        "tags": [
+          "Invoices & Documents"
+        ],
+        "summary": "Download XML",
+        "description": "Downloads the XML for an eligible Phase 2 tax document owned by the API-key account.",
+        "x-ar-summary": "تنزيل XML النهائي من زاتكا",
+        "x-ar-description": "ينزّل XML النهائي فقط للمستند الضريبي المؤهل للمرحلة الثانية والتابع للحساب. تعيد المستندات القياسية XML المعتمد من زاتكا، بينما تعيد المستندات المبسطة والإشعارات المؤهلة XML الموقّع والمبلّغ بنجاح.",
+        "operationId": "downloadInvoiceXml",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Final XML binary response",
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "example": "<?xml version=\"1.0\"?><Invoice>...</Invoice>"
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/archive/export": {
+      "post": {
+        "tags": [
+          "Invoices & Documents"
+        ],
+        "summary": "Export invoice archive",
+        "description": "Downloads a ZIP containing the selected PDF or eligible final XML documents plus manifest.csv. The API key selects live or sandbox data. A maximum of 250 available files and 50 MB is allowed per request; use a smaller date range when needed.",
+        "x-ar-summary": "تصدير أرشيف الفواتير",
+        "x-ar-description": "ينزّل ملف ZIP يحتوي على ملفات PDF المحددة أو ملفات XML النهائية المؤهلة مع manifest.csv. يحدد مفتاح API بيانات البيئة الحية أو التجريبية. الحد الأقصى 250 ملفًا متاحًا و50 ميجابايت لكل طلب.",
+        "operationId": "exportInvoiceArchive",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvoiceArchiveRequest"
+              },
+              "example": {
+                "format": "xml",
+                "start_date": "2026-01-01",
+                "end_date": "2026-01-31",
+                "invoice_types": [0, 1, 3, 4]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ZIP archive response",
+            "content": {
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "example": "Binary ZIP archive with documents and manifest.csv"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/drafts/create": {
+      "post": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Create quotation",
+        "description": "Creates a quotation. The quotation document is supplied as a JSON-encoded string in json_data.",
+        "x-ar-summary": "إنشاء عرض سعر",
+        "x-ar-description": "ينشئ عرض سعر. يتم إرسال بيانات العرض كسلسلة JSON داخل الحقل json_data.",
+        "operationId": "createQuotation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuotationWriteRequest"
+              },
+              "example": {
+                "json_data": "{\"document_kind\":\"quotation\",\"client_type\":2,\"client_name\":\"Example Customer\",\"client_address\":\"Riyadh\",\"client_email_id\":\"customer@example.com\",\"invoice_detail\":[{\"description\":\"Example item\",\"unit_price\":100,\"quantity\":1,\"vat_percent\":15,\"discount_percent\":0}]}",
+                "environment": "live"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "Draft created successfully",
+                    "id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/drafts/update": {
+      "post": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Update quotation",
+        "description": "Updates an existing quotation and its JSON-encoded document data.",
+        "x-ar-summary": "تحديث عرض سعر",
+        "x-ar-description": "يحدّث عرض سعر موجود وبيانات المستند المرسلة كسلسلة JSON.",
+        "operationId": "updateQuotation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuotationUpdateRequest"
+              },
+              "example": {
+                "id": 123,
+                "json_data": "{\"document_kind\":\"quotation\",\"client_type\":2,\"client_name\":\"Example Customer\",\"client_address\":\"Riyadh\",\"client_email_id\":\"customer@example.com\",\"invoice_detail\":[{\"description\":\"Updated example item\",\"unit_price\":100,\"quantity\":1,\"vat_percent\":15,\"discount_percent\":0}]}",
+                "environment": "live"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "Draft updated successfully"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/drafts/get_all": {
+      "post": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "List quotations",
+        "description": "Returns quotations for the selected API-key environment.",
+        "x-ar-summary": "قائمة عروض الأسعار",
+        "x-ar-description": "يعيد عروض الأسعار في بيئة مفتاح API المحددة.",
+        "operationId": "listQuotations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuotationListRequest"
+              },
+              "example": {
+                "page": 1,
+                "per_page": 20,
+                "search_key": "",
+                "document_kind": "quotation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "drafts": [
+                      {
+                        "id": 123,
+                        "environment": "sandbox",
+                        "created_on": "2026-08-30 20:41:45",
+                        "json_data": "{\"document_kind\":\"quotation\",\"client_name\":\"Example Customer\",\"invoice_detail\":[{\"description\":\"Example item\",\"unit_price\":100,\"quantity\":1}]}"
+                      }
+                    ],
+                    "pagination_meta": {
+                      "current_page": 1,
+                      "pages": 1,
+                      "per_page": 20,
+                      "total": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/drafts/get_byid/{quotation_id}": {
+      "get": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Get quotation",
+        "description": "Returns one quotation owned by the authenticated account.",
+        "x-ar-summary": "استرجاع عرض سعر",
+        "x-ar-description": "يعيد عرض سعر واحدًا تابعًا للحساب.",
+        "operationId": "getQuotation",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QuotationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "id": 123,
+                    "environment": "sandbox",
+                    "status": 1,
+                    "created_on": "2026-08-30 20:41:45",
+                    "json_data": "{\"document_kind\":\"quotation\",\"client_name\":\"Example Customer\",\"invoice_detail\":[{\"description\":\"Example item\",\"unit_price\":100,\"quantity\":1}]}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/drafts/quotation_pdf/{quotation_id}": {
+      "get": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Download quotation PDF",
+        "description": "Returns the quotation PDF. Set download to 1 to request a file attachment.",
+        "x-ar-summary": "تنزيل عرض السعر PDF",
+        "x-ar-description": "يعيد ملف PDF لعرض السعر. استخدم القيمة 1 في download لتنزيله كمرفق.",
+        "operationId": "downloadQuotationPdf",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QuotationId"
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ],
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Quotation PDF",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "example": "%PDF-1.7 (binary PDF content)"
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/drafts/delete/{quotation_id}": {
+      "delete": {
+        "tags": [
+          "Quotations"
+        ],
+        "summary": "Delete quotation",
+        "description": "Deletes one quotation owned by the authenticated account.",
+        "x-ar-summary": "حذف عرض سعر",
+        "x-ar-description": "يحذف عرض سعر واحدًا تابعًا للحساب.",
+        "operationId": "deleteQuotation",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/QuotationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "message": "Draft deleted successfully"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/get_report": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get sales report",
+        "description": "Returns sales-report data for a date range and document type.",
+        "x-ar-summary": "تقرير المبيعات",
+        "x-ar-description": "يعيد بيانات تقرير المبيعات لفترة ونوع مستند محددين.",
+        "operationId": "getSalesReport",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportRequest"
+              },
+              "example": {
+                "start_date": "2026-01-01",
+                "end_date": "2026-01-31",
+                "type": "invoice"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "revenue_dashboard": [
+                      {
+                        "date": "2026-08-30",
+                        "invoice_count": 4,
+                        "total": 460,
+                        "vat": 60
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/get_vat_return_report": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Get VAT return report",
+        "description": "Returns VAT-return figures for a date range.",
+        "x-ar-summary": "تقرير الإقرار الضريبي",
+        "x-ar-description": "يعيد بيانات الإقرار الضريبي لفترة محددة.",
+        "operationId": "getVatReturnReport",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DateRangeRequest"
+              },
+              "example": {
+                "start_date": "2026-01-01",
+                "end_date": "2026-03-31"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "sale_sub_total": 1000,
+                    "sale_vat": 150,
+                    "sale_discount": 0,
+                    "purchase_sub_total": 200,
+                    "purchase_vat": 30,
+                    "purchase_discount": 0,
+                    "credit_total": 0,
+                    "debit_total": 0,
+                    "vat_out": 150,
+                    "vat_in": 30,
+                    "vat_payable": 120
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/zatca-phase2/status": {
+      "get": {
+        "tags": [
+          "ZATCA Phase 2"
+        ],
+        "summary": "Get Phase 2 status",
+        "description": "Returns the current ZATCA Phase 2 onboarding state for the API-key environment.",
+        "x-ar-summary": "حالة ربط المرحلة الثانية",
+        "x-ar-description": "يعيد حالة ربط زاتكا للمرحلة الثانية في بيئة مفتاح API.",
+        "operationId": "getZatcaPhase2Status",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "status": "draft",
+                    "status_label": "Draft",
+                    "next_step": "review_info",
+                    "environment": "sandbox",
+                    "is_sandbox": true,
+                    "is_integrated": false,
+                    "is_renewal_flow": false,
+                    "can_manage": true,
+                    "can_refresh": true,
+                    "can_renew": false,
+                    "can_retry_compliance_checks": false,
+                    "company_name": "Example Company",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "source": "api",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/zatca-phase2/save-draft": {
+      "post": {
+        "tags": [
+          "ZATCA Phase 2"
+        ],
+        "summary": "Save Phase 2 draft",
+        "description": "Saves the establishment and device information used for Phase 2 onboarding.",
+        "x-ar-summary": "حفظ مسودة المرحلة الثانية",
+        "x-ar-description": "يحفظ بيانات المنشأة والجهاز المستخدمة في ربط المرحلة الثانية.",
+        "operationId": "saveZatcaPhase2Draft",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ZatcaBusinessData"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "status": "draft",
+                    "status_label": "Draft",
+                    "next_step": "review_info",
+                    "environment": "sandbox",
+                    "is_sandbox": true,
+                    "is_integrated": false,
+                    "is_renewal_flow": false,
+                    "can_manage": true,
+                    "can_refresh": true,
+                    "can_renew": false,
+                    "can_retry_compliance_checks": false,
+                    "company_name": "Example Company",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "source": "api",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/zatca-phase2/generate-csr": {
+      "post": {
+        "tags": [
+          "ZATCA Phase 2"
+        ],
+        "summary": "Generate CSR",
+        "description": "Generates the certificate signing request for the supplied Phase 2 business data.",
+        "x-ar-summary": "إنشاء طلب الشهادة CSR",
+        "x-ar-description": "ينشئ طلب توقيع الشهادة باستخدام بيانات المنشأة للمرحلة الثانية.",
+        "operationId": "generateZatcaCsr",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ZatcaBusinessData"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "status": "awaiting_otp",
+                    "status_label": "Awaiting OTP",
+                    "next_step": "enter_otp",
+                    "environment": "sandbox",
+                    "is_sandbox": true,
+                    "is_integrated": false,
+                    "is_renewal_flow": false,
+                    "can_manage": true,
+                    "can_refresh": true,
+                    "can_renew": false,
+                    "can_retry_compliance_checks": false,
+                    "company_name": "Example Company",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "source": "api",
+                    "user_id": 123,
+                    "csr_generated_on": "2026-08-30T20:42:00Z",
+                    "csr_expires_on": "2026-08-31T20:42:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/zatca-phase2/submit-otp": {
+      "post": {
+        "tags": [
+          "ZATCA Phase 2"
+        ],
+        "summary": "Submit ZATCA OTP",
+        "description": "Submits the OTP generated in the ZATCA portal to continue onboarding.",
+        "x-ar-summary": "إرسال رمز زاتكا",
+        "x-ar-description": "يرسل رمز التحقق الصادر من بوابة زاتكا لمتابعة الربط.",
+        "operationId": "submitZatcaOtp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ZatcaOtpRequest"
+              },
+              "example": {
+                "source_channel": "api",
+                "otp": "123456"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "status": "production_issued",
+                    "status_label": "Integrated",
+                    "next_step": "completed",
+                    "environment": "sandbox",
+                    "is_sandbox": true,
+                    "is_integrated": true,
+                    "is_renewal_flow": false,
+                    "can_manage": true,
+                    "can_refresh": true,
+                    "can_renew": true,
+                    "can_retry_compliance_checks": false,
+                    "company_name": "Example Company",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "source": "api",
+                    "user_id": 123,
+                    "activated_on": "2026-08-30T20:48:00Z",
+                    "production_issued_on": "2026-08-30T20:48:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/zatca-phase2/retry-compliance": {
+      "post": {
+        "tags": [
+          "ZATCA Phase 2"
+        ],
+        "summary": "Retry compliance checks",
+        "description": "Retries the Phase 2 compliance-document checks after a recoverable onboarding result.",
+        "x-ar-summary": "إعادة اختبارات الامتثال",
+        "x-ar-description": "يعيد اختبارات مستندات الامتثال بعد نتيجة ربط قابلة للمحاولة مرة أخرى.",
+        "operationId": "retryZatcaCompliance",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OptionalJsonObject"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "status": "production_issued",
+                    "status_label": "Integrated",
+                    "next_step": "completed",
+                    "environment": "sandbox",
+                    "is_sandbox": true,
+                    "is_integrated": true,
+                    "is_renewal_flow": false,
+                    "can_manage": true,
+                    "can_refresh": true,
+                    "can_renew": true,
+                    "can_retry_compliance_checks": false,
+                    "company_name": "Example Company",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "source": "api",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/zatca-phase2/refresh-status": {
+      "post": {
+        "tags": [
+          "ZATCA Phase 2"
+        ],
+        "summary": "Refresh Phase 2 status",
+        "description": "Refreshes the Phase 2 state from the current onboarding records.",
+        "x-ar-summary": "تحديث حالة المرحلة الثانية",
+        "x-ar-description": "يحدّث حالة المرحلة الثانية من سجلات الربط الحالية.",
+        "operationId": "refreshZatcaPhase2Status",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OptionalJsonObject"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "status": "awaiting_otp",
+                    "status_label": "Awaiting OTP",
+                    "next_step": "enter_otp",
+                    "environment": "sandbox",
+                    "is_sandbox": true,
+                    "is_integrated": false,
+                    "is_renewal_flow": false,
+                    "can_manage": true,
+                    "can_refresh": true,
+                    "can_renew": false,
+                    "can_retry_compliance_checks": false,
+                    "company_name": "Example Company",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "source": "api",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/zatca-phase2/renew": {
+      "post": {
+        "tags": [
+          "ZATCA Phase 2"
+        ],
+        "summary": "Renew Phase 2 integration",
+        "description": "Starts a controlled renewal of the account's Phase 2 integration.",
+        "x-ar-summary": "تجديد ربط المرحلة الثانية",
+        "x-ar-description": "يبدأ تجديدًا منظمًا لربط الحساب مع المرحلة الثانية.",
+        "operationId": "renewZatcaPhase2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceChannelRequest"
+              },
+              "example": {
+                "source_channel": "api"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "status": "awaiting_otp",
+                    "status_label": "Awaiting OTP",
+                    "next_step": "enter_otp",
+                    "environment": "sandbox",
+                    "is_sandbox": true,
+                    "is_integrated": false,
+                    "is_renewal_flow": true,
+                    "can_manage": true,
+                    "can_refresh": true,
+                    "can_renew": false,
+                    "can_retry_compliance_checks": false,
+                    "company_name": "Example Company",
+                    "company_registration_number": "1010000000",
+                    "company_vat_number": "300000000000003",
+                    "source": "api",
+                    "user_id": 123
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "Use the live API key for live data or the sandbox API key for test data."
+      }
+    },
+    "parameters": {
+      "ClientId": {
+        "name": "client_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 123
+        }
+      },
+      "DocumentId": {
+        "name": "document_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 123
+        }
+      },
+      "QuotationId": {
+        "name": "quotation_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 123
+        }
+      }
+    },
+    "requestBodies": {
+      "OptionalJsonObject": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "example": {}
+          }
+        }
+      },
+      "ZatcaBusinessData": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ZatcaBusinessDataRequest"
+            },
+            "example": {
+              "source_channel": "api",
+              "company_name": "Example Company",
+              "organization_name": "Example Company",
+              "organization_identifier": "300000000000003",
+              "organization_unit_name": "Riyadh Branch",
+              "company_registration_number": "1010000000",
+              "company_vat_number": "300000000000003",
+              "industry_business_category": "Retail",
+              "street_name": "Example Street",
+              "building_number": "1234",
+              "district": "Example District",
+              "city": "Riyadh",
+              "postal_code": "12345",
+              "country_name": "SA"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "Success": {
+        "description": "Request processed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiResponse"
+            },
+            "examples": {
+              "success": {
+                "value": {
+                  "status": true,
+                  "response": {}
+                }
+              },
+              "serviceMessage": {
+                "value": {
+                  "status": false,
+                  "message": "Request could not be completed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ValidationError": {
+        "description": "Invalid request data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "status": false,
+              "response": [
+                "Invalid request data."
+              ]
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "API key is missing or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "status": false,
+              "response": "Invalid API key"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "response": {
+            "nullable": true
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "Request could not be completed"
+          }
+        }
+      },
+      "RegistrationIntentRequest": {
+        "type": "object",
+        "required": [
+          "registration_data",
+          "registration_journey_id"
+        ],
+        "properties": {
+          "registration_data": {
+            "$ref": "#/components/schemas/RegistrationData"
+          },
+          "registration_journey_id": {
+            "type": "string",
+            "description": "A unique id generated by the integrating system for this registration attempt."
+          }
+        }
+      },
+      "RegistrationData": {
+        "type": "object",
+        "required": [
+          "email_id",
+          "password",
+          "confirm_password",
+          "company_name",
+          "terms_and_conditions"
+        ],
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "minLength": 2
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email_id": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "minLength": 6
+          },
+          "confirm_password": {
+            "type": "string",
+            "format": "password",
+            "minLength": 6
+          },
+          "company_name": {
+            "type": "string",
+            "minLength": 2
+          },
+          "mobile_number": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "country_code": {
+            "type": "string",
+            "pattern": "^\\+[0-9]+$"
+          },
+          "company_registration_number": {
+            "type": "string"
+          },
+          "company_vat_number": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "terms_and_conditions": {
+            "type": "integer",
+            "enum": [
+              1
+            ]
+          },
+          "source": {
+            "type": "string",
+            "example": "api"
+          }
+        }
+      },
+      "EmailRequest": {
+        "type": "object",
+        "required": [
+          "email_id"
+        ],
+        "properties": {
+          "email_id": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "EmailOtpRequest": {
+        "type": "object",
+        "required": [
+          "email_id",
+          "otp"
+        ],
+        "properties": {
+          "email_id": {
+            "type": "string",
+            "format": "email"
+          },
+          "otp": {
+            "type": "integer",
+            "minimum": 100000,
+            "maximum": 999999
+          }
+        }
+      },
+      "CompleteRegistrationRequest": {
+        "type": "object",
+        "required": [
+          "registration_intent"
+        ],
+        "properties": {
+          "registration_intent": {
+            "type": "string"
+          }
+        }
+      },
+      "CredentialsRequest": {
+        "type": "object",
+        "required": [
+          "user_name",
+          "user_pass"
+        ],
+        "properties": {
+          "user_name": {
+            "type": "string",
+            "description": "Account email address"
+          },
+          "user_pass": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "ApiKeyValidationRequest": {
+        "type": "object",
+        "required": [
+          "api_key"
+        ],
+        "properties": {
+          "api_key": {
+            "type": "string"
+          }
+        }
+      },
+      "PasswordResetRequest": {
+        "type": "object",
+        "required": [
+          "uuid",
+          "password",
+          "confirm_password"
+        ],
+        "properties": {
+          "uuid": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "minLength": 6
+          },
+          "confirm_password": {
+            "type": "string",
+            "format": "password",
+            "minLength": 6
+          }
+        }
+      },
+      "ProfileUpdateRequest": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_name": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "country_code": {
+            "type": "string"
+          },
+          "mobile_number": {
+            "type": "string"
+          },
+          "tax_setup_status": {
+            "type": "string",
+            "enum": [
+              "vat_registered",
+              "non_vat"
+            ]
+          },
+          "company_registration_number": {
+            "type": "string"
+          },
+          "company_vat_number": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "footer_text": {
+            "type": "string"
+          },
+          "send_mail": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "client_send_mail": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          }
+        }
+      },
+      "ClientCreateRequest": {
+        "type": "object",
+        "required": [
+          "first_name",
+          "mobile_number",
+          "country_code"
+        ],
+        "properties": {
+          "first_name": {
+            "type": "string",
+            "minLength": 2
+          },
+          "email_id": {
+            "type": "string",
+            "format": "email"
+          },
+          "mobile_number": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "country_code": {
+            "type": "string",
+            "pattern": "^\\+[0-9]+$"
+          },
+          "address": {
+            "type": "string"
+          },
+          "company_registration_number": {
+            "type": "string"
+          },
+          "company_vat_number": {
+            "type": "string"
+          },
+          "category_id": {
+            "type": "string",
+            "description": "One or more numeric category ids separated by commas."
+          }
+        }
+      },
+      "ClientUpdateRequest": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "first_name": {
+            "type": "string",
+            "minLength": 2
+          },
+          "email_id": {
+            "type": "string",
+            "format": "email"
+          },
+          "mobile_number": {
+            "type": "string",
+            "pattern": "^[0-9]+$"
+          },
+          "country_code": {
+            "type": "string",
+            "pattern": "^\\+[0-9]+$"
+          },
+          "address": {
+            "type": "string"
+          },
+          "company_registration_number": {
+            "type": "string"
+          },
+          "company_vat_number": {
+            "type": "string"
+          },
+          "category_id": {
+            "type": "string"
+          }
+        }
+      },
+      "ListRequest": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "per_page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 20
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 20
+          },
+          "search_key": {
+            "type": "string"
+          }
+        }
+      },
+      "InvoiceLine": {
+        "type": "object",
+        "required": [
+          "description",
+          "unit_price",
+          "quantity"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "unit_price": {
+            "type": "number",
+            "minimum": 0
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "vat_percent_product": {
+            "type": "number",
+            "minimum": 0,
+            "example": 15
+          },
+          "vat_percent": {
+            "type": "number",
+            "minimum": 0
+          },
+          "discount_percent": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      },
+      "InvoiceCreateRequest": {
+        "type": "object",
+        "required": [
+          "invoice_type",
+          "invoice_detail"
+        ],
+        "properties": {
+          "invoice_type": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "description": "0 simplified invoice, 1 standard invoice, 2 purchase invoice, 3 credit note, 4 debit note."
+          },
+          "client_type": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "taxes_included": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "client_id": {
+            "type": "integer"
+          },
+          "client_name": {
+            "type": "string"
+          },
+          "client_address": {
+            "type": "string"
+          },
+          "client_email_id": {
+            "type": "string",
+            "format": "email"
+          },
+          "client_vat_number": {
+            "type": "string"
+          },
+          "date_time": {
+            "type": "string",
+            "description": "YYYY-MM-DD HH:MM:SS or ISO 8601. Defaults to the current time when omitted."
+          },
+          "reference_number": {
+            "type": "string"
+          },
+          "parent_invoice_number": {
+            "type": "string",
+            "description": "Required for credit and debit notes. Use the invoice_number returned for the original document in the same API-key environment."
+          },
+          "document_reason": {
+            "type": "string",
+            "description": "Reason for a credit or debit note."
+          },
+          "created_type": {
+            "type": "string",
+            "description": "Optional source channel identifier."
+          },
+          "source_uid": {
+            "type": "string",
+            "description": "Optional source record identifier for supported connector channels."
+          },
+          "draft_id": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Optional quotation id to mark as converted after this document is created. Use with created_type=quotation and source_uid=quotation:{id}."
+          },
+          "invoice_detail": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLine"
+            }
+          }
+        }
+      },
+      "InvoiceListRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "include_all_invoice_types": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "invoice_types": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "enum": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "InvoiceArchiveRequest": {
+        "type": "object",
+        "required": [
+          "format"
+        ],
+        "properties": {
+          "format": {
+            "type": "string",
+            "enum": [
+              "pdf",
+              "xml"
+            ]
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Optional. Supply together with end_date; omit both for all dates."
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Optional. Supply together with start_date; omit both for all dates."
+          },
+          "invoice_types": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ]
+            },
+            "description": "Optional. Omit to include every issued invoice/note type."
+          }
+        }
+      },
+      "QuotationWriteRequest": {
+        "type": "object",
+        "required": [
+          "json_data"
+        ],
+        "properties": {
+          "json_data": {
+            "type": "string",
+            "description": "The complete quotation payload encoded as a JSON string."
+          },
+          "environment": {
+            "type": "string",
+            "enum": [
+              "live",
+              "sandbox"
+            ],
+            "description": "The API key remains authoritative for the environment."
+          }
+        }
+      },
+      "QuotationUpdateRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/QuotationWriteRequest"
+          },
+          {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "QuotationListRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ListRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "document_kind": {
+                "type": "string",
+                "example": "quotation"
+              },
+              "environment": {
+                "type": "string",
+                "enum": [
+                  "live",
+                  "sandbox"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "DateRangeRequest": {
+        "type": "object",
+        "required": [
+          "start_date",
+          "end_date"
+        ],
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "ReportRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DateRangeRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "ZatcaBusinessDataRequest": {
+        "type": "object",
+        "required": [
+          "company_name",
+          "organization_name",
+          "organization_identifier",
+          "organization_unit_name",
+          "company_registration_number",
+          "company_vat_number",
+          "industry_business_category",
+          "street_name",
+          "building_number",
+          "district",
+          "city",
+          "postal_code",
+          "country_name"
+        ],
+        "properties": {
+          "source_channel": {
+            "type": "string",
+            "example": "api"
+          },
+          "company_name": {
+            "type": "string"
+          },
+          "organization_name": {
+            "type": "string"
+          },
+          "organization_identifier": {
+            "type": "string"
+          },
+          "organization_unit_name": {
+            "type": "string"
+          },
+          "company_registration_number": {
+            "type": "string"
+          },
+          "company_vat_number": {
+            "type": "string"
+          },
+          "industry_business_category": {
+            "type": "string"
+          },
+          "street_name": {
+            "type": "string"
+          },
+          "building_number": {
+            "type": "string"
+          },
+          "district": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "postal_code": {
+            "type": "string"
+          },
+          "country_name": {
+            "type": "string",
+            "example": "SA"
+          }
+        }
+      },
+      "ZatcaOtpRequest": {
+        "type": "object",
+        "required": [
+          "otp"
+        ],
+        "properties": {
+          "source_channel": {
+            "type": "string",
+            "example": "sdk"
+          },
+          "otp": {
+            "type": "string"
+          }
+        }
+      },
+      "SourceChannelRequest": {
+        "type": "object",
+        "properties": {
+          "source_channel": {
+            "type": "string",
+            "example": "api"
+          }
+        }
+      }
+    }
+  }
+}
