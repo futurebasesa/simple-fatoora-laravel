@@ -2,6 +2,7 @@
     "name": "simplefatoora/laravel",
     "description": "Official Laravel package for the Simple Fatoora API",
     "type": "library",
+    "license": "MIT",
     "keywords": [
         "laravel",
         "simple fatoora",

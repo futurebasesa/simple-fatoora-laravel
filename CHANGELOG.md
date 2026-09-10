@@ -14,5 +14,6 @@ All notable changes to this package are documented here. The format follows [Kee
 - Laravel service-provider, configuration publishing, dependency injection, and facade support.
 - Deterministic contract-drift checks, static analysis, formatting checks, and compatibility tests.
 - An opt-in, protected staging smoke test for representative live and sandbox workflows.
+- Distribution under the MIT License.
 
 [0.1.0]: https://github.com/futurebasesa/simple-fatoora-laravel/releases/tag/v0.1.0
