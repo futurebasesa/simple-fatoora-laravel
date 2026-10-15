@@ -51,7 +51,19 @@ final class OpenApiDriftTest extends TestCase
 
         try {
             $differences = $this->comparator->compareFiles($this->snapshot, $candidate);
-            self::assertSame(['createInvoice'], $differences['changed']);
+            self::assertSame(['createInvoice', 'getInvoice', 'getInvoiceByNumber'], $differences['changed']);
+        } finally {
+            unlink($candidate);
+        }
+    }
+
+    public function test_archive_response_header_drift_is_detected(): void
+    {
+        $candidate = $this->candidate(function (array &$document): void {
+            $document['paths']['/invoice/archive/export']['post']['responses']['200']['headers']['X-SF-Archive-Next']['schema']['type'] = 'integer';
+        });
+        try {
+            self::assertSame(['exportInvoiceArchive'], $this->comparator->compareFiles($this->snapshot, $candidate)['changed']);
         } finally {
             unlink($candidate);
         }

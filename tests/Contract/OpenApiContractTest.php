@@ -40,7 +40,7 @@ final class OpenApiContractTest extends TestCase
             $packaged[$endpoint->value] = [$endpoint->method()->value, $endpoint->path()];
         }
 
-        self::assertCount(39, $documented);
+        self::assertCount(44, $documented);
         self::assertSame($documented, $packaged);
     }
 

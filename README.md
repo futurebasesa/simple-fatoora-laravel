@@ -187,7 +187,7 @@ $simpleFatoora->clients()->delete($clientId);
 
 ## Products
 
-Products are remembered from successfully created documents. The public API supports searching and listing them:
+The product endpoints search and list the account’s saved product catalogue. Creating a document through this client does not automatically add its lines to that catalogue.
 
 ```php
 use SimpleFatoora\Laravel\Data\ListOptions;
@@ -267,6 +267,26 @@ $documents = $simpleFatoora->documents()->list(new InvoiceListOptions(
 ))->response;
 ```
 
+## Classified zero VAT and transaction dates
+
+Supply `zeroVatVersion: 1` and a `zeroVat` classification on each applicable zero-rate sales line. For example, `['reason_code' => 'VATEX-SA-35']` selects qualifying medicines and medical equipment. Outside-scope transactions require a specific explanation with `VATEX-SA-OOS`. The business is responsible for selecting the applicable treatment.
+
+`InvoiceData` accepts `buyerCountry`, structured address fields, `transactionDateMode`, `transactionDate`, `notes`, `footerText`, currency and shipping fields. For a previous supply or purchase date, use `transactionDateMode: 'previous'` with an ISO date before today in Asia/Riyadh. The server assigns invoice issue time; `dateTime` is retained only for compatibility. Notes use their own issue dates for reporting.
+
+`InvoiceLine` accepts positive fractional quantities with up to six decimal places, item identifiers, classifications and percentage or fixed discounts. Supply one discount representation per line.
+
+Profile defaults can be saved with `ProfileUpdateData(zeroVatDefault: [...])`. Retrieve the default and copy it to the applicable lines explicitly. Use `$simpleFatoora->profile()->clearZeroVatDefault()` to clear it. Invoice creation does not change the saved default.
+
+## Idempotent document creation
+
+Pass a stable key for each logical document:
+
+```php
+$created = $simpleFatoora->documents()->create($document, idempotencyKey: 'order-1001');
+```
+
+This option applies to ordinary `created_type=api` requests. Keep the same key and identical payload when retrying. A completed request returns the original document. A different payload, an in-progress request or an uncertain outcome raises `ConflictException`; inspect the referenced document before taking further action. Writes are not retried automatically. Keys are scoped to the account and API-key environment. A validation failure before an invoice is saved releases the key. Use a new key for a different document.
+
 ## PDF, XML, and archive downloads
 
 Downloads are streamed into a temporary file in the destination directory and moved into place only after a successful response and format check. Existing files are not overwritten unless `overwrite: true` is explicit.
@@ -296,7 +316,7 @@ $archive = $simpleFatoora->documents()->exportArchive(
 );
 ```
 
-Each result is a `DownloadedFile` containing `path`, `contentType`, `filename`, and `size`. XML is available only for eligible Phase 2 tax documents. Archive limits and eligibility rules are described in the [API reference](https://simplefatoora.com/en/integration).
+Each result is a `DownloadedFile` containing `path`, `contentType`, `filename`, and `size`. Archive results also expose `nextCursor`, `part`, `exported`, `skipped` and `complete`. While `complete` is false, request the next part using the same format and `ArchiveRequest(cursor: $part->nextCursor, format: ArchiveFormat::Pdf)`. Save each part to a distinct destination. Archive date filters use issue dates. Each part is limited to 250 documents and 50 MB of document bytes, with a 10 MB per-file limit. Review skipped counts and the ZIP’s manifest. A fresh export retries availability; continuation keeps the original selection. XML is available only for eligible Phase 2 tax documents. Archive limits and eligibility rules are described in the [API reference](https://simplefatoora.com/en/integration).
 
 ## Quotations and conversion
 
@@ -308,6 +328,7 @@ $quotationPayload = [
     'document_kind' => 'quotation',
     'client_type' => 2,
     'client_name' => 'Example Customer',
+    'buyer_name' => 'Example Customer',
     'client_address' => 'Riyadh',
     'invoice_detail' => [
         ['description' => 'Consulting', 'unit_price' => 100, 'quantity' => 1, 'vat_percent' => 15],
@@ -344,13 +365,36 @@ Conversion issues a normal document and marks the quotation converted. Repeating
 use SimpleFatoora\Laravel\Data\DateRange;
 
 $sales = $simpleFatoora->reports()
-    ->sales(new DateRange('2026-01-01', '2026-01-31'))
+    ->sales(new DateRange('2026-01-01', '2026-01-31', type: 'sale_report'))
     ->response;
 
 $vatReturn = $simpleFatoora->reports()
     ->vatReturn(new DateRange('2026-01-01', '2026-03-31'))
     ->response;
 ```
+
+Report types are `sale_report`, `purchase_report`, `vat_report` and `revenue_dashboard`. Omitting `type` selects `revenue_dashboard`, which groups records by issue date. Sales and purchase reports use the saved transaction date when available.
+
+## Excel reports
+
+```php
+use SimpleFatoora\Laravel\Data\ReportExportRequest;
+
+$simpleFatoora->reports()->downloadDocumentsExcel(
+    new ReportExportRequest('2026-09-01', '2026-09-30', type: 'sale_report', lang: 'en'),
+    storage_path('app/reports/sales.xlsx'),
+);
+$simpleFatoora->reports()->downloadVatExcel(
+    new ReportExportRequest('2026-09-01', '2026-09-30', lang: 'ar'),
+    storage_path('app/reports/vat.xlsx'),
+);
+```
+
+Reports are calculated from the authenticated account’s records. Sales and purchases use their saved transaction date when present; adjustments use their own issue date. The VAT workbook contains aggregate VAT-return report figures across tax categories, without a breakdown by exemption code.
+
+## Invoice email sender
+
+Use `$simpleFatoora->invoiceEmailSender()->get()` to read state and `update($request)` to submit a documented sender action. Customer-sandbox keys are read-only. Changes apply to the account’s sender settings. Read the current revision before editing. Domain DNS proof and sending-domain verification are required before activation; verification alone does not activate sending. Optional test messages are sent only to the verified sender inbox. See the API reference for action fields, revision handling and template variables.
 
 ## ZATCA Phase 2
 
@@ -389,7 +433,7 @@ $simpleFatoora->zatcaPhase2()->refreshStatus();
 $simpleFatoora->zatcaPhase2()->renew();
 ```
 
-Only an authorized business representative should start or renew ZATCA onboarding. OTPs for this flow come from ZATCA and are not the account-registration email OTP.
+Read `next_step`, `error_category`, `error_code` and `can_retry_compliance_checks` before recovery. Terminal or expired compliance sessions require a fresh CSR and a new ZATCA OTP. Integrated legal identity fields are protected. Only an authorized business representative should start or renew ZATCA onboarding. OTPs for this flow come from ZATCA and are not the account-registration email OTP.
 
 ## Error handling
 

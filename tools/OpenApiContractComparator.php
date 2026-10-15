@@ -34,6 +34,32 @@ final class OpenApiContractComparator
         return compact('missing', 'added', 'changed');
     }
 
+    /**
+     * @param  array<string, mixed>  $responses
+     * @param  array<string, mixed>  $document
+     * @return array<string, mixed>
+     */
+    private function responses(array $responses, array $document): array
+    {
+        $result = [];
+        foreach ($responses as $status => $value) {
+            if (is_array($value)) {
+                $value = $this->resolve($value, $document);
+                $headers = [];
+                foreach (($value['headers'] ?? []) as $name => $header) {
+                    if (is_string($name) && is_array($header)) {
+                        $header = $this->resolve($header, $document);
+                        $headers[$name] = $this->schema($header['schema'] ?? [], $document);
+                    }
+                }
+                ksort($headers);
+                $result[(string) $status] = ['content' => $this->request($value, $document), 'headers' => $headers];
+            }
+        }
+
+        return $result;
+    }
+
     /** @return array<string, mixed> */
     private function read(string $path): array
     {
@@ -90,6 +116,7 @@ final class OpenApiContractComparator
                     'authenticated' => ! (array_key_exists('security', $operation) && $operation['security'] === []),
                     'parameters' => $this->parameters($parameters, $document),
                     'request' => $this->request($operation['requestBody'] ?? null, $document),
+                    'responses' => $this->responses($operation['responses'] ?? [], $document),
                 ];
             }
         }
@@ -168,7 +195,7 @@ final class OpenApiContractComparator
         $schema = $this->resolve($schema, $document);
         $signature = [];
 
-        foreach (['type', 'format', 'minimum', 'maximum', 'minLength', 'maxLength', 'minItems', 'pattern'] as $property) {
+        foreach (['type', 'format', 'minimum', 'maximum', 'minLength', 'maxLength', 'minItems', 'pattern', 'exclusiveMinimum', 'exclusiveMaximum', 'multipleOf', 'nullable', 'additionalProperties'] as $property) {
             if (array_key_exists($property, $schema)) {
                 $signature[$property] = $schema[$property];
             }
@@ -199,11 +226,13 @@ final class OpenApiContractComparator
             $signature['items'] = $this->schema($schema['items'], $document);
         }
 
-        if (is_array($schema['allOf'] ?? null)) {
-            $signature['allOf'] = array_map(
-                fn (mixed $part): array => is_array($part) ? $this->schema($part, $document) : [],
-                $schema['allOf'],
-            );
+        foreach (['allOf', 'oneOf', 'anyOf'] as $composition) {
+            if (is_array($schema[$composition] ?? null)) {
+                $signature[$composition] = array_map(
+                    fn (mixed $part): array => is_array($part) ? $this->schema($part, $document) : [],
+                    $schema[$composition],
+                );
+            }
         }
 
         return $signature;

@@ -14,6 +14,7 @@ use SimpleFatoora\Laravel\Data\ApiResponse;
 use SimpleFatoora\Laravel\Data\DownloadedFile;
 use SimpleFatoora\Laravel\Enums\Endpoint;
 use SimpleFatoora\Laravel\Exceptions\ApiException;
+use SimpleFatoora\Laravel\Exceptions\ConflictException;
 use SimpleFatoora\Laravel\Exceptions\DownloadException;
 use SimpleFatoora\Laravel\Exceptions\ForbiddenException;
 use SimpleFatoora\Laravel\Exceptions\MalformedResponseException;
@@ -53,12 +54,18 @@ final readonly class HttpTransport
         array $pathParameters = [],
         array $query = [],
         array $payload = [],
+        ?string $idempotencyKey = null,
     ): ApiResponse {
         if ($endpoint->isDownload()) {
             throw new ApiException('Download endpoints must use the streaming download method.');
         }
 
+        if ($idempotencyKey !== null && ($endpoint !== Endpoint::CreateInvoice || preg_match('/^[A-Za-z0-9._:-]{1,128}$/D', $idempotencyKey) !== 1)) {
+            throw new ValidationException('Invalid idempotency key.');
+        }
+
         $response = $this->sendWithSafeRetries(
+            headers: $idempotencyKey === null ? [] : ['Idempotency-Key' => $idempotencyKey],
             endpoint: $endpoint,
             url: $this->url($endpoint, $pathParameters),
             query: $query,
@@ -153,6 +160,12 @@ final readonly class HttpTransport
                 contentType: $contentType,
                 filename: $this->filename($response),
                 size: $size,
+                nextCursor: trim($response->header('X-SF-Archive-Next') ?? '') ?: null,
+                part: max(1, (int) $response->header('X-SF-Archive-Part')),
+                exported: (int) $response->header('X-SF-Archive-Exported'),
+                skipped: (int) $response->header('X-SF-Archive-Skipped'),
+                complete: trim($response->header('X-SF-Archive-Next') ?? '') === '',
+
             );
         } catch (Throwable $exception) {
             if (is_file($temporary)) {
@@ -170,6 +183,7 @@ final readonly class HttpTransport
     /**
      * @param  array<string, mixed>  $query
      * @param  array<string, mixed>  $payload
+     * @param  array<string, string>  $headers
      */
     private function sendWithSafeRetries(
         Endpoint $endpoint,
@@ -177,6 +191,7 @@ final readonly class HttpTransport
         array $query,
         array $payload,
         ?string $sink = null,
+        array $headers = [],
     ): Response {
         $attempts = $endpoint->mayRetry() ? $this->config->retries + 1 : 1;
 
@@ -193,7 +208,7 @@ final readonly class HttpTransport
                     $options['sink'] = $sink;
                 }
 
-                $response = $this->pendingRequest($endpoint)->send($endpoint->method()->value, $url, $options);
+                $response = $this->pendingRequest($endpoint)->withHeaders($headers)->send($endpoint->method()->value, $url, $options);
 
                 if ($attempt < $attempts && ($response->status() === 429 || $response->serverError())) {
                     $this->sleeper->sleep($this->retryDelay($response));
@@ -285,6 +300,9 @@ final readonly class HttpTransport
         }
         if ($status === 403) {
             throw new ForbiddenException($message, $status, $details);
+        }
+        if ($status === 409) {
+            throw new ConflictException($message, $status, $details);
         }
         if ($status === 429) {
             throw new RateLimitException($message, $this->retryAfterSeconds($retryAfter), $details);
@@ -424,7 +442,9 @@ final readonly class HttpTransport
             Endpoint::DownloadInvoicePdf,
             Endpoint::DownloadQuotationPdf => str_starts_with($prefix, '%PDF-'),
             Endpoint::DownloadInvoiceXml => str_starts_with(ltrim($this->withoutUtf8Bom($prefix)), '<'),
-            Endpoint::ExportInvoiceArchive => str_starts_with($prefix, 'PK'),
+            Endpoint::ExportInvoiceArchive,
+            Endpoint::ExportDocumentsExcel,
+            Endpoint::ExportVatExcel => str_starts_with($prefix, 'PK'),
             default => false,
         };
     }

@@ -15,15 +15,20 @@ use SimpleFatoora\Laravel\Support\Payload;
 final readonly class DocumentsResource extends Resource
 {
     /** @param array<string, mixed>|ArrayPayload $document */
-    public function create(array|ArrayPayload $document): ApiResponse
+    public function create(array|ArrayPayload $document, ?string $idempotencyKey = null): ApiResponse
     {
-        return $this->transport->request(Endpoint::CreateInvoice, payload: Payload::normalize($document));
+        return $this->transport->request(Endpoint::CreateInvoice, payload: Payload::normalize($document), idempotencyKey: $idempotencyKey);
     }
 
     /** @param array<string, mixed>|InvoiceListOptions $options */
     public function list(array|InvoiceListOptions $options = []): ApiResponse
     {
         return $this->transport->request(Endpoint::ListInvoices, payload: Payload::normalize($options));
+    }
+
+    public function findByNumber(string $invoiceNumber): ApiResponse
+    {
+        return $this->transport->request(Endpoint::GetInvoiceByNumber, query: ['invoice_number' => $invoiceNumber]);
     }
 
     public function find(int $documentId): ApiResponse

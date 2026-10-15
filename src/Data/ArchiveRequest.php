@@ -19,6 +19,7 @@ final readonly class ArchiveRequest implements ArrayPayload
         public DateTimeInterface|string|null $startDate = null,
         public DateTimeInterface|string|null $endDate = null,
         public ?array $types = null,
+        public ?string $cursor = null,
     ) {
         if (($startDate === null) !== ($endDate === null)) {
             throw new InvalidArgumentException('startDate and endDate must be supplied together.');
@@ -28,6 +29,8 @@ final readonly class ArchiveRequest implements ArrayPayload
     public function toArray(): array
     {
         return Payload::withoutNulls([
+            'cursor' => $this->cursor,
+
             'format' => $this->format->value,
             'start_date' => self::date($this->startDate),
             'end_date' => self::date($this->endDate),

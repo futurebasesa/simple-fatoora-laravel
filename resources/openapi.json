@@ -62,6 +62,12 @@
       "description": "Manage the ZATCA Phase 2 onboarding lifecycle.",
       "x-ar-name": "زاتكا المرحلة الثانية",
       "x-ar-description": "إدارة دورة ربط المنشأة مع متطلبات زاتكا للمرحلة الثانية."
+    },
+    {
+      "name": "Invoice Email Sender",
+      "x-ar-name": "مرسل بريد الفواتير",
+      "description": "Verified account sender configuration.",
+      "x-ar-description": "إعدادات مرسل البريد والتحقق من نطاقه."
     }
   ],
   "security": [
@@ -105,7 +111,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -119,7 +125,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -156,7 +163,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -170,7 +177,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -208,7 +216,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -222,7 +230,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -259,7 +268,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -280,7 +289,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -318,7 +328,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -332,7 +342,8 @@
                   "response": "Validated successfully"
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -369,7 +380,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -384,7 +395,8 @@
                   "response": "Validated successfully"
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -423,7 +435,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -437,7 +449,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -460,7 +473,7 @@
         "operationId": "getBusinessProfile",
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -487,7 +500,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -530,7 +544,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -544,7 +558,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -586,7 +601,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -599,7 +614,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -622,7 +638,7 @@
         "operationId": "listClientCategories",
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -643,7 +659,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -685,7 +702,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -699,7 +716,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -737,7 +755,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -751,7 +769,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -779,7 +798,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -801,7 +820,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -838,7 +858,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -867,7 +887,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -895,7 +916,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -908,7 +929,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -934,9 +956,11 @@
             "name": "search_key",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "Consulting"
             },
-            "description": "Product search text"
+            "description": "Product search text",
+            "x-ar-description": "النص المستخدم للبحث عن المنتج."
           },
           {
             "name": "limit",
@@ -944,13 +968,14 @@
             "schema": {
               "type": "integer",
               "default": 20,
-              "maximum": 100
+              "maximum": 100,
+              "example": 20
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -972,7 +997,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1007,7 +1033,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1029,7 +1055,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1046,9 +1073,9 @@
           "Invoices & Documents"
         ],
         "summary": "Create invoice or document",
-        "description": "Creates a simplified invoice, standard invoice, purchase invoice, credit note, or debit note. Credit and debit notes require the parent document's invoice_number as parent_invoice_number. ZATCA processing follows the account and API-key environment. To convert an existing quotation, also send its id as draft_id, set created_type to quotation, and use quotation:{id} as source_uid. Repeating that same quotation conversion returns the original document instead of creating a duplicate.",
+        "description": "Creates a simplified invoice, standard invoice, purchase invoice, credit note, or debit note. Credit and debit notes require the parent document's invoice_number as parent_invoice_number. ZATCA processing follows the account and API-key environment. To convert an existing quotation, also send its id as draft_id, set created_type to quotation, and use quotation:{id} as source_uid. Repeating that same quotation conversion returns the original document instead of creating a duplicate. Set zero_vat_version=1 for classified zero-rate sales. Lines in the same VAT category must use the same classification and reason. Export codes VATEX-SA-32/33 require invoice_type=1, a foreign buyer_country, client_name, street_name and city. A stable internal buyer reference is generated if needed; no government identity is generated. Ordinary purchases are internal documents. Document emails follow the current account permissions; sandbox customer mail is disabled.",
         "x-ar-summary": "إنشاء فاتورة أو مستند",
-        "x-ar-description": "ينشئ فاتورة مبسطة أو قياسية أو فاتورة مشتريات أو إشعارًا دائنًا أو مدينًا. تتطلب الإشعارات الدائنة والمدينة إرسال invoice_number للمستند الأصلي في parent_invoice_number. تتم معالجة زاتكا حسب إعداد الحساب وبيئة مفتاح API. لتحويل عرض سعر قائم، أرسل كذلك معرّفه في draft_id، واضبط created_type على quotation واستخدم quotation:{id} في source_uid. تؤدي إعادة طلب التحويل نفسه إلى إرجاع المستند الأصلي بدلًا من إنشاء نسخة مكررة.",
+        "x-ar-description": "ينشئ فاتورة مبسطة أو قياسية أو فاتورة مشتريات أو إشعارًا دائنًا أو مدينًا. تتطلب الإشعارات الدائنة والمدينة إرسال invoice_number للمستند الأصلي في parent_invoice_number. تتم معالجة زاتكا حسب إعداد الحساب وبيئة مفتاح API. لتحويل عرض سعر قائم، أرسل كذلك معرّفه في draft_id، واضبط created_type على quotation واستخدم quotation:{id} في source_uid. تؤدي إعادة طلب التحويل نفسه إلى إرجاع المستند الأصلي بدلًا من إنشاء نسخة مكررة. استخدم zero_vat_version=1 لتصنيف المبيعات بنسبة صفر. يجب توحيد التصنيف والسبب داخل الفئة الضريبية الواحدة. يتطلب التصدير فاتورة قياسية وبلدًا أجنبيًا واسم المشتري وشارعه ومدينته. ينشأ مرجع داخلي عند الحاجة دون إنشاء هوية حكومية. المشتريات العادية مستندات داخلية. تخضع رسائل المستندات لأذونات الحساب الحالية، وتعطل رسائل العملاء في البيئة التجريبية.",
         "operationId": "createInvoice",
         "requestBody": {
           "required": true,
@@ -1057,68 +1084,337 @@
               "schema": {
                 "$ref": "#/components/schemas/InvoiceCreateRequest"
               },
-              "example": {
-                "invoice_type": 0,
-                "client_type": 2,
-                "taxes_included": 0,
-                "client_name": "Example Customer",
-                "client_address": "Riyadh",
-                "client_email_id": "customer@example.com",
-                "reference_number": "POS-1001",
-                "invoice_detail": [
-                  {
-                    "description": "Example item",
-                    "unit_price": 100,
-                    "quantity": 1,
-                    "vat_percent_product": 15,
-                    "discount_percent": 0
+              "examples": {
+                "fractional": {
+                  "summary": "Fractional quantity",
+                  "value": {
+                    "invoice_type": 0,
+                    "client_type": 2,
+                    "taxes_included": 0,
+                    "client_name": "Example Customer",
+                    "client_address": "Riyadh",
+                    "client_email_id": "customer@example.com",
+                    "reference_number": "POS-1001",
+                    "invoice_detail": [
+                      {
+                        "description": "Consulting",
+                        "unit_price": 100,
+                        "quantity": 1.5,
+                        "vat_percent": 15
+                      }
+                    ],
+                    "created_type": "api"
+                  },
+                  "x-response-example": {
+                    "status": true,
+                    "response": {
+                      "id": 123,
+                      "invoice_number": "ST123-456",
+                      "invoice_type_code": 0,
+                      "document_label": "Simplified Tax Invoice",
+                      "document_label_ar": "فاتورة ضريبية مبسطة",
+                      "seller_tax_status": "vat_registered",
+                      "is_tax_document": true,
+                      "vat": 22.5,
+                      "total": 172.5,
+                      "date_time": "2026-10-15 12:00:00",
+                      "transaction_date": null,
+                      "environment": "sandbox",
+                      "pdf_ready": false,
+                      "xml_available": false
+                    }
                   }
-                ],
-                "created_type": "api"
+                },
+                "zero_rated": {
+                  "summary": "Zero-rated sale",
+                  "value": {
+                    "invoice_type": 0,
+                    "client_type": 2,
+                    "taxes_included": 0,
+                    "client_name": "Example Customer",
+                    "client_address": "Riyadh",
+                    "client_email_id": "customer@example.com",
+                    "reference_number": "POS-1001",
+                    "invoice_detail": [
+                      {
+                        "description": "Qualifying medicines",
+                        "quantity": 1,
+                        "unit_price": 100,
+                        "vat_percent": 0,
+                        "zero_vat": {
+                          "reason_code": "VATEX-SA-35"
+                        }
+                      }
+                    ],
+                    "created_type": "api",
+                    "zero_vat_version": 1
+                  },
+                  "x-response-example": {
+                    "status": true,
+                    "response": {
+                      "id": 123,
+                      "invoice_number": "ST123-456",
+                      "invoice_type_code": 0,
+                      "document_label": "Simplified Tax Invoice",
+                      "document_label_ar": "فاتورة ضريبية مبسطة",
+                      "seller_tax_status": "vat_registered",
+                      "is_tax_document": true,
+                      "vat": 0.0,
+                      "total": 100.0,
+                      "date_time": "2026-10-15 12:00:00",
+                      "transaction_date": null,
+                      "environment": "sandbox",
+                      "pdf_ready": false,
+                      "xml_available": false
+                    }
+                  }
+                },
+                "exempt": {
+                  "summary": "Exempt sale",
+                  "value": {
+                    "invoice_type": 0,
+                    "client_type": 2,
+                    "taxes_included": 0,
+                    "client_name": "Example Customer",
+                    "client_address": "Riyadh",
+                    "client_email_id": "customer@example.com",
+                    "reference_number": "POS-1001",
+                    "invoice_detail": [
+                      {
+                        "description": "Exempt financial service",
+                        "quantity": 1,
+                        "unit_price": 100,
+                        "vat_percent": 0,
+                        "zero_vat": {
+                          "reason_code": "VATEX-SA-29"
+                        }
+                      }
+                    ],
+                    "created_type": "api",
+                    "zero_vat_version": 1
+                  },
+                  "x-response-example": {
+                    "status": true,
+                    "response": {
+                      "id": 123,
+                      "invoice_number": "ST123-456",
+                      "invoice_type_code": 0,
+                      "document_label": "Simplified Tax Invoice",
+                      "document_label_ar": "فاتورة ضريبية مبسطة",
+                      "seller_tax_status": "vat_registered",
+                      "is_tax_document": true,
+                      "vat": 0.0,
+                      "total": 100.0,
+                      "date_time": "2026-10-15 12:00:00",
+                      "transaction_date": null,
+                      "environment": "sandbox",
+                      "pdf_ready": false,
+                      "xml_available": false
+                    }
+                  }
+                },
+                "outside_scope": {
+                  "summary": "Outside-scope transaction",
+                  "value": {
+                    "invoice_type": 0,
+                    "client_type": 2,
+                    "taxes_included": 0,
+                    "client_name": "Example Customer",
+                    "client_address": "Riyadh",
+                    "client_email_id": "customer@example.com",
+                    "reference_number": "POS-1001",
+                    "invoice_detail": [
+                      {
+                        "description": "Third-party deposit",
+                        "quantity": 1,
+                        "unit_price": 100,
+                        "vat_percent": 0,
+                        "zero_vat": {
+                          "reason_code": "VATEX-SA-OOS",
+                          "reason": "Deposit held on behalf of a third party"
+                        }
+                      }
+                    ],
+                    "created_type": "api",
+                    "zero_vat_version": 1
+                  },
+                  "x-response-example": {
+                    "status": true,
+                    "response": {
+                      "id": 123,
+                      "invoice_number": "ST123-456",
+                      "invoice_type_code": 0,
+                      "document_label": "Simplified Tax Invoice",
+                      "document_label_ar": "فاتورة ضريبية مبسطة",
+                      "seller_tax_status": "vat_registered",
+                      "is_tax_document": true,
+                      "vat": 0.0,
+                      "total": 100.0,
+                      "date_time": "2026-10-15 12:00:00",
+                      "transaction_date": null,
+                      "environment": "sandbox",
+                      "pdf_ready": false,
+                      "xml_available": false
+                    }
+                  }
+                },
+                "export": {
+                  "summary": "Export with a previous supply date",
+                  "value": {
+                    "invoice_type": 1,
+                    "client_type": 1,
+                    "taxes_included": 0,
+                    "client_name": "Example Buyer",
+                    "client_address": "Riyadh",
+                    "client_email_id": "customer@example.com",
+                    "reference_number": "POS-1001",
+                    "invoice_detail": [
+                      {
+                        "description": "Exported goods",
+                        "quantity": 1,
+                        "unit_price": 100,
+                        "vat_percent": 0,
+                        "zero_vat": {
+                          "reason_code": "VATEX-SA-32"
+                        }
+                      }
+                    ],
+                    "created_type": "api",
+                    "buyer_country": "AE",
+                    "street_name": "Example Street",
+                    "city": "Dubai",
+                    "zero_vat_version": 1,
+                    "transaction_date_mode": "previous",
+                    "transaction_date": "2026-09-15"
+                  },
+                  "x-response-example": {
+                    "status": true,
+                    "response": {
+                      "id": 123,
+                      "invoice_number": "ST123-456",
+                      "invoice_type_code": 1,
+                      "document_label": "Simplified Tax Invoice",
+                      "document_label_ar": "فاتورة ضريبية مبسطة",
+                      "seller_tax_status": "vat_registered",
+                      "is_tax_document": true,
+                      "vat": 0.0,
+                      "total": 100.0,
+                      "date_time": "2026-10-15 12:00:00",
+                      "transaction_date": "2026-09-15",
+                      "environment": "sandbox",
+                      "pdf_ready": false,
+                      "xml_available": false
+                    }
+                  }
+                },
+                "credit_note": {
+                  "summary": "Credit note",
+                  "value": {
+                    "invoice_type": 3,
+                    "parent_invoice_number": "ST123-456",
+                    "document_reason": "Returned item",
+                    "invoice_detail": [
+                      {
+                        "description": "Returned item",
+                        "unit_price": 100,
+                        "quantity": 1,
+                        "vat_percent": 15
+                      }
+                    ]
+                  },
+                  "x-response-example": {
+                    "status": true,
+                    "response": {
+                      "id": 123,
+                      "invoice_number": "ST123-456",
+                      "invoice_type_code": 3,
+                      "document_label": "Simplified Tax Invoice",
+                      "document_label_ar": "فاتورة ضريبية مبسطة",
+                      "seller_tax_status": "vat_registered",
+                      "is_tax_document": true,
+                      "vat": 15.0,
+                      "total": 115.0,
+                      "date_time": "2026-10-15 12:00:00",
+                      "transaction_date": null,
+                      "environment": "sandbox",
+                      "pdf_ready": false,
+                      "xml_available": false
+                    }
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
+                  "$ref": "#/components/schemas/DocumentResponse"
                 },
                 "example": {
                   "status": true,
                   "response": {
-                    "message": "Invoice created successfully",
                     "id": 123,
-                    "invoice_number": "U123-1001",
-                    "invoice": "https://example.com/invoices/U123-1001.pdf",
-                    "pdf_ready": true,
-                    "pdf_download_url": "https://api.example.com/v1/invoice/pdf/123",
-                    "xml_available": true,
-                    "xml_archive_state": "reported",
-                    "xml_download_url": "https://api.example.com/v1/invoice/xml/123",
-                    "qrcode": "https://example.com/invoices/U123-1001-qr.png",
-                    "seller_name": "Example Company",
-                    "seller_vat_number": "300000000000003",
-                    "seller_address": "Riyadh",
-                    "vat": 15,
-                    "total": 115,
-                    "date_time": "2026-08-30 23:41:18",
-                    "environment": "live"
+                    "invoice_number": "ST123-456",
+                    "invoice_type_code": 0,
+                    "document_label": "Simplified Tax Invoice",
+                    "document_label_ar": "فاتورة ضريبية مبسطة",
+                    "seller_tax_status": "vat_registered",
+                    "is_tax_document": true,
+                    "vat": 22.5,
+                    "total": 172.5,
+                    "date_time": "2026-10-15 12:00:00",
+                    "transaction_date": null,
+                    "environment": "sandbox",
+                    "pdf_ready": false,
+                    "xml_available": false
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "description": "Idempotency conflict or request awaiting completion/review",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "status": false,
+                  "message": "This request is processing or requires review. Check its document before retrying.",
+                  "response": {
+                    "invoice_id": 123
+                  }
+                }
+              }
+            },
+            "x-ar-description": "تعارض في مفتاح منع التكرار أو طلب ينتظر الاكتمال أو المراجعة."
           }
-        }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{1,128}$"
+            },
+            "description": "Optional for created_type=api (the default). Reuse only with identical data and the same account/environment. Completed requests replay the original document; different data, processing or uncertain outcomes return 409. A failure before any invoice is saved releases the key.",
+            "x-ar-description": "اختياري عند created_type=api. يعاد استخدامه مع البيانات والحساب والبيئة نفسها فقط. يعاد المستند الأصلي عند الاكتمال؛ اختلاف البيانات أو استمرار المعالجة أو النتيجة غير المؤكدة يعيد 409."
+          }
+        ]
       }
     },
     "/invoice/get_all": {
@@ -1147,7 +1443,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1159,12 +1455,12 @@
                     "invoices": [
                       {
                         "id": 123,
-                        "invoice_number": "U123-1001",
+                        "invoice_number": "ST123-456",
                         "invoice_type": 0,
                         "date_time": "2026-08-30 23:41:18",
                         "reference_number": "POS-1001",
                         "total": 115,
-                        "invoice": "https://example.com/invoices/U123-1001.pdf",
+                        "invoice": "https://example.com/invoices/ST123-456.pdf",
                         "pdf_ready": true,
                         "pdf_download_url": "https://api.example.com/v1/invoice/pdf/123",
                         "xml_available": true,
@@ -1183,7 +1479,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1211,17 +1508,17 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
+                  "$ref": "#/components/schemas/DocumentResponse"
                 },
                 "example": {
                   "status": true,
                   "response": {
                     "id": 123,
-                    "invoice_number": "U123-1001",
+                    "invoice_number": "ST123-456",
                     "invoice_type": 0,
                     "date_time": "2026-08-30 23:41:18",
                     "reference_number": "POS-1001",
@@ -1232,8 +1529,8 @@
                     "sub_total": 100,
                     "vat": 15,
                     "total": 115,
-                    "invoice": "https://example.com/invoices/U123-1001.pdf",
-                    "qrcode": "https://example.com/invoices/U123-1001-qr.png",
+                    "invoice": "https://example.com/invoices/ST123-456.pdf",
+                    "qrcode": "https://example.com/invoices/ST123-456-qr.png",
                     "pdf_ready": true,
                     "pdf_download_url": "https://api.example.com/v1/invoice/pdf/123",
                     "xml_available": true,
@@ -1249,11 +1546,17 @@
                         "vat": 15,
                         "total": 115
                       }
-                    ]
+                    ],
+                    "document_label": "Simplified Tax Invoice",
+                    "document_label_ar": "فاتورة ضريبية مبسطة",
+                    "seller_tax_status": "vat_registered",
+                    "is_tax_document": true,
+                    "transaction_date": "2026-09-15"
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1284,7 +1587,10 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "enum": [0, 1],
+              "enum": [
+                0,
+                1
+              ],
               "default": 1
             }
           }
@@ -1300,7 +1606,8 @@
                 },
                 "example": "%PDF binary document"
               }
-            }
+            },
+            "x-ar-description": "ملف PDF."
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -1334,7 +1641,8 @@
                 },
                 "example": "<?xml version=\"1.0\"?><Invoice>...</Invoice>"
               }
-            }
+            },
+            "x-ar-description": "ملف XML النهائي."
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -1348,9 +1656,9 @@
           "Invoices & Documents"
         ],
         "summary": "Export invoice archive",
-        "description": "Downloads a ZIP containing the selected PDF or eligible final XML documents plus manifest.csv. The API key selects live or sandbox data. A maximum of 250 available files and 50 MB is allowed per request; use a smaller date range when needed.",
+        "description": "Downloads one ZIP part, up to 250 documents and 50 MB of document bytes; each file is limited to 10 MB. Follow X-SF-Archive-Next using cursor until empty. Each ZIP includes manifest.csv and archive-info.json with completion, next cursor and unavailable counts. Unavailable files are listed as skipped. A fresh export retries availability; continuation preserves the original document selection. Date filters select the issue date, not the supply/purchase date used by reports.",
         "x-ar-summary": "تصدير أرشيف الفواتير",
-        "x-ar-description": "ينزّل ملف ZIP يحتوي على ملفات PDF المحددة أو ملفات XML النهائية المؤهلة مع manifest.csv. يحدد مفتاح API بيانات البيئة الحية أو التجريبية. الحد الأقصى 250 ملفًا متاحًا و50 ميجابايت لكل طلب.",
+        "x-ar-description": "ينزل جزء ZIP بحد 250 مستندًا و50 ميجابايت من ملفات المستندات، و10 ميجابايت لكل ملف. استخدم cursor للمتابعة حتى تفرغ ترويسة X-SF-Archive-Next. يتضمن ZIP بيان الملفات وarchive-info.json لحالة الاكتمال والمتابعة والملفات غير المتاحة. يبدأ طلب جديد محاولة جديدة لإتاحة الملفات. ترشح تواريخ الأرشيف حسب تاريخ الإصدار، لا تاريخ التوريد أو الشراء المستخدم في التقارير.",
         "operationId": "exportInvoiceArchive",
         "requestBody": {
           "required": true,
@@ -1363,7 +1671,12 @@
                 "format": "xml",
                 "start_date": "2026-01-01",
                 "end_date": "2026-01-31",
-                "invoice_types": [0, 1, 3, 4]
+                "invoice_types": [
+                  0,
+                  1,
+                  3,
+                  4
+                ]
               }
             }
           }
@@ -1379,7 +1692,38 @@
                 },
                 "example": "Binary ZIP archive with documents and manifest.csv"
               }
-            }
+            },
+            "headers": {
+              "X-SF-Archive-Next": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Next cursor; empty on the final part.",
+                "x-ar-description": "رمز متابعة الجزء التالي؛ يكون فارغًا في الجزء الأخير."
+              },
+              "X-SF-Archive-Part": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Part number.",
+                "x-ar-description": "رقم الجزء."
+              },
+              "X-SF-Archive-Exported": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Files included in this part.",
+                "x-ar-description": "عدد الملفات المضمنة في هذا الجزء."
+              },
+              "X-SF-Archive-Skipped": {
+                "schema": {
+                  "type": "integer"
+                },
+                "description": "Unavailable files skipped in this part.",
+                "x-ar-description": "عدد الملفات غير المتاحة التي تم تجاوزها في هذا الجزء."
+              }
+            },
+            "x-ar-description": "أرشيف ZIP."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1408,7 +1752,7 @@
                 "$ref": "#/components/schemas/QuotationWriteRequest"
               },
               "example": {
-                "json_data": "{\"document_kind\":\"quotation\",\"client_type\":2,\"client_name\":\"Example Customer\",\"client_address\":\"Riyadh\",\"client_email_id\":\"customer@example.com\",\"invoice_detail\":[{\"description\":\"Example item\",\"unit_price\":100,\"quantity\":1,\"vat_percent\":15,\"discount_percent\":0}]}",
+                "json_data": "{\"document_kind\": \"quotation\", \"client_type\": 2, \"client_name\": \"Example Customer\", \"client_address\": \"Riyadh\", \"client_email_id\": \"customer@example.com\", \"invoice_detail\": [{\"description\": \"Example item\", \"unit_price\": 100, \"quantity\": 1, \"vat_percent\": 15, \"discount_percent\": 0}], \"buyer_name\": \"Example Customer\"}",
                 "environment": "live"
               }
             }
@@ -1416,7 +1760,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1430,7 +1774,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1460,7 +1805,7 @@
               },
               "example": {
                 "id": 123,
-                "json_data": "{\"document_kind\":\"quotation\",\"client_type\":2,\"client_name\":\"Example Customer\",\"client_address\":\"Riyadh\",\"client_email_id\":\"customer@example.com\",\"invoice_detail\":[{\"description\":\"Updated example item\",\"unit_price\":100,\"quantity\":1,\"vat_percent\":15,\"discount_percent\":0}]}",
+                "json_data": "{\"document_kind\": \"quotation\", \"client_type\": 2, \"client_name\": \"Example Customer\", \"client_address\": \"Riyadh\", \"client_email_id\": \"customer@example.com\", \"invoice_detail\": [{\"description\": \"Updated example item\", \"unit_price\": 100, \"quantity\": 1, \"vat_percent\": 15, \"discount_percent\": 0}], \"buyer_name\": \"Example Customer\"}",
                 "environment": "live"
               }
             }
@@ -1468,7 +1813,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1481,7 +1826,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1519,7 +1865,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1545,7 +1891,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1573,7 +1920,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1590,7 +1937,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1639,7 +1987,8 @@
                 },
                 "example": "%PDF-1.7 (binary PDF content)"
               }
-            }
+            },
+            "x-ar-description": "ملف PDF لعرض السعر."
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -1664,7 +2013,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1677,7 +2026,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1694,9 +2044,9 @@
           "Reports"
         ],
         "summary": "Get sales report",
-        "description": "Returns sales-report data for a date range and document type.",
+        "description": "Returns monthly sales, purchase or VAT report data for the requested period and type. Sales and purchases use the saved transaction date when available; credit and debit notes use their issue date. The revenue_dashboard type uses issue dates. All amounts are in SAR. The API key determines the account and environment.",
         "x-ar-summary": "تقرير المبيعات",
-        "x-ar-description": "يعيد بيانات تقرير المبيعات لفترة ونوع مستند محددين.",
+        "x-ar-description": "يعيد بيانات المبيعات أو المشتريات أو الضريبة مجمعة حسب الشهر للفترة والنوع المحددين. تستخدم المبيعات والمشتريات تاريخ المعاملة المحفوظ عند توفره، وتستخدم الإشعارات الدائنة والمدينة تاريخ إصدارها. يستخدم النوع revenue_dashboard تواريخ الإصدار. جميع المبالغ بالريال السعودي. يحدد مفتاح API الحساب والبيئة.",
         "operationId": "getSalesReport",
         "requestBody": {
           "required": true,
@@ -1706,16 +2056,16 @@
                 "$ref": "#/components/schemas/ReportRequest"
               },
               "example": {
-                "start_date": "2026-01-01",
-                "end_date": "2026-01-31",
-                "type": "invoice"
+                "start_date": "2026-09-01",
+                "end_date": "2026-09-30",
+                "type": "sale_report"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1724,18 +2074,26 @@
                 "example": {
                   "status": true,
                   "response": {
-                    "revenue_dashboard": [
+                    "sale_report": [
                       {
-                        "date": "2026-08-30",
-                        "invoice_count": 4,
+                        "month_name": "September 2026",
+                        "company_name": "Example Company",
                         "total": 460,
-                        "vat": 60
+                        "vat": 60,
+                        "net": 400,
+                        "sale_net": 400,
+                        "sale_vat": 60,
+                        "sale_total": 460,
+                        "credit_net": 0,
+                        "credit_vat": 0,
+                        "credit_total": 0
                       }
                     ]
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1752,9 +2110,9 @@
           "Reports"
         ],
         "summary": "Get VAT return report",
-        "description": "Returns VAT-return figures for a date range.",
+        "description": "Returns VAT-return figures for a date range. Sales and purchases use their saved transaction date when present, otherwise issue date. Credit/debit notes use their own issue date. Amounts are SAR. The API key selects the environment; request user_id/environment cannot change scope.",
         "x-ar-summary": "تقرير الإقرار الضريبي",
-        "x-ar-description": "يعيد بيانات الإقرار الضريبي لفترة محددة.",
+        "x-ar-description": "تعيد بيانات التقرير ضمن نطاق الحساب والبيئة المحددين بالمفتاح. تستخدم المبيعات والمشتريات تاريخ المعاملة المحفوظ أو تاريخ الإصدار عند غيابه؛ تستخدم الإشعارات تاريخ إصدارها. المبالغ بالريال.",
         "operationId": "getVatReturnReport",
         "requestBody": {
           "required": true,
@@ -1772,7 +2130,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1795,7 +2153,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1812,13 +2171,13 @@
           "ZATCA Phase 2"
         ],
         "summary": "Get Phase 2 status",
-        "description": "Returns the current ZATCA Phase 2 onboarding state for the API-key environment.",
+        "description": "Returns the current ZATCA Phase 2 onboarding state for the API-key environment. Read next_step, error_category and error_code before recovery. A terminal or expired compliance session requires a fresh CSR and a new ZATCA OTP. Retrying is available only when can_retry_compliance_checks is true. Integrated legal identity fields are protected.",
         "x-ar-summary": "حالة ربط المرحلة الثانية",
-        "x-ar-description": "يعيد حالة ربط زاتكا للمرحلة الثانية في بيئة مفتاح API.",
+        "x-ar-description": "اقرأ next_step وerror_category وerror_code قبل الاسترداد. تتطلب جلسة الامتثال المنتهية أو غير القابلة للاستكمال طلب توقيع جديدًا ورمز زاتكا جديدًا. تتاح إعادة المحاولة عند can_retry_compliance_checks فقط. تحمى حقول الهوية القانونية بعد الربط.",
         "operationId": "getZatcaPhase2Status",
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1846,7 +2205,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1872,7 +2232,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1900,7 +2260,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1917,16 +2278,16 @@
           "ZATCA Phase 2"
         ],
         "summary": "Generate CSR",
-        "description": "Generates the certificate signing request for the supplied Phase 2 business data.",
+        "description": "Generates the certificate signing request for the supplied Phase 2 business data. Read next_step, error_category and error_code before recovery. A terminal or expired compliance session requires a fresh CSR and a new ZATCA OTP. Retrying is available only when can_retry_compliance_checks is true. Integrated legal identity fields are protected.",
         "x-ar-summary": "إنشاء طلب الشهادة CSR",
-        "x-ar-description": "ينشئ طلب توقيع الشهادة باستخدام بيانات المنشأة للمرحلة الثانية.",
+        "x-ar-description": "اقرأ next_step وerror_category وerror_code قبل الاسترداد. تتطلب جلسة الامتثال المنتهية أو غير القابلة للاستكمال طلب توقيع جديدًا ورمز زاتكا جديدًا. تتاح إعادة المحاولة عند can_retry_compliance_checks فقط. تحمى حقول الهوية القانونية بعد الربط.",
         "operationId": "generateZatcaCsr",
         "requestBody": {
           "$ref": "#/components/requestBodies/ZatcaBusinessData"
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1956,7 +2317,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -1993,7 +2355,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2023,7 +2385,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -2040,16 +2403,16 @@
           "ZATCA Phase 2"
         ],
         "summary": "Retry compliance checks",
-        "description": "Retries the Phase 2 compliance-document checks after a recoverable onboarding result.",
+        "description": "Retries the Phase 2 compliance-document checks after a recoverable onboarding result. Read next_step, error_category and error_code before recovery. A terminal or expired compliance session requires a fresh CSR and a new ZATCA OTP. Retrying is available only when can_retry_compliance_checks is true. Integrated legal identity fields are protected.",
         "x-ar-summary": "إعادة اختبارات الامتثال",
-        "x-ar-description": "يعيد اختبارات مستندات الامتثال بعد نتيجة ربط قابلة للمحاولة مرة أخرى.",
+        "x-ar-description": "اقرأ next_step وerror_category وerror_code قبل الاسترداد. تتطلب جلسة الامتثال المنتهية أو غير القابلة للاستكمال طلب توقيع جديدًا ورمز زاتكا جديدًا. تتاح إعادة المحاولة عند can_retry_compliance_checks فقط. تحمى حقول الهوية القانونية بعد الربط.",
         "operationId": "retryZatcaCompliance",
         "requestBody": {
           "$ref": "#/components/requestBodies/OptionalJsonObject"
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2077,7 +2440,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -2103,7 +2467,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2131,7 +2495,8 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
@@ -2166,7 +2531,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response",
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2194,13 +2559,275 @@
                   }
                 }
               }
-            }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
           },
           "400": {
             "$ref": "#/components/responses/ValidationError"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/get_byinvoice_number": {
+      "get": {
+        "operationId": "getInvoiceByNumber",
+        "tags": [
+          "Invoices & Documents"
+        ],
+        "summary": "Find document by invoice number",
+        "x-ar-summary": "البحث برقم الفاتورة",
+        "description": "Finds one owned document in the API-key environment. Success returns the document directly, without a response envelope. Its integer status is the stored document state. An unavailable document returns the usual error object with boolean status=false.",
+        "x-ar-description": "يبحث عن مستند مملوك للحساب ضمن بيئة المفتاح. يعاد المستند مباشرة دون غلاف response؛ status الرقمي يمثل حالة المستند. يعاد خطأ عدم الإتاحة بالقيمة المنطقية status=false.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/Document"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                },
+                "example": {
+                  "id": 123,
+                  "invoice_number": "ST123-456",
+                  "status": 1,
+                  "invoice_type": 0,
+                  "environment": "live"
+                }
+              }
+            },
+            "x-ar-description": "استجابة ناجحة."
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "invoice_number",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "ST123-456"
+          }
+        ]
+      }
+    },
+    "/invoice/export_documents_excel": {
+      "post": {
+        "operationId": "exportDocumentsExcel",
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Download sales or purchase Excel",
+        "x-ar-summary": "تنزيل Excel للمبيعات أو المشتريات",
+        "description": "Downloads the sales or purchase records for the authenticated account as an Excel workbook. The start and end dates are inclusive. Records follow the same transaction-date rules as the corresponding report. Set lang to en or ar.",
+        "x-ar-description": "ينزّل سجلات المبيعات أو المشتريات للحساب بصيغة Excel. يشمل التقرير تاريخي البداية والنهاية ويستخدم قواعد تاريخ المعاملة نفسها المطبقة في التقرير المقابل. حدد en أو ar في lang.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "example": "Binary XLSX workbook"
+              }
+            },
+            "x-ar-description": "استجابة ناجحة."
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentExcelRequest"
+              },
+              "example": {
+                "start_date": "2026-09-01",
+                "end_date": "2026-09-30",
+                "type": "sale_report",
+                "lang": "en"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoice/export_vat_excel": {
+      "post": {
+        "operationId": "exportVatExcel",
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Download VAT Excel",
+        "x-ar-summary": "تنزيل Excel للضريبة",
+        "description": "Downloads the aggregate VAT-return report figures as an Excel workbook. The start and end dates are inclusive. Figures combine the applicable tax categories; the workbook does not provide a breakdown by exemption code. Set lang to en or ar.",
+        "x-ar-description": "ينزّل إجماليات تقرير ضريبة القيمة المضافة بصيغة Excel. يشمل التقرير تاريخي البداية والنهاية. تجمع المبالغ الفئات الضريبية المنطبقة دون تفصيل حسب رمز الإعفاء. حدد en أو ar في lang.",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "example": "Binary XLSX workbook"
+              }
+            },
+            "x-ar-description": "استجابة ناجحة."
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VatExcelRequest"
+              },
+              "example": {
+                "start_date": "2026-09-01",
+                "end_date": "2026-09-30",
+                "lang": "en"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/invoice-email-sender": {
+      "get": {
+        "operationId": "getInvoiceEmailSender",
+        "tags": [
+          "Invoice Email Sender"
+        ],
+        "summary": "Read invoice email sender",
+        "x-ar-summary": "قراءة مرسل بريد الفواتير",
+        "description": "Returns the account-wide invoice email sender settings, DNS verification records, current revision and recent delivery statuses. Both live and sandbox keys can read these settings; only live keys can change them.",
+        "x-ar-description": "يعيد إعدادات مرسل بريد الفواتير للحساب وسجلات التحقق من النطاق والمراجعة الحالية وحالات الإرسال الأخيرة. يمكن قراءتها بمفتاح الإنتاج أو المفتاح التجريبي، وتعديلها بمفتاح الإنتاج فقط.",
+        "responses": {
+          "200": {
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "status": "Not configured",
+                    "active": false,
+                    "verified": false,
+                    "revision": 0,
+                    "domain": "",
+                    "records": [],
+                    "test_status": "not_sent",
+                    "sandbox": false,
+                    "draft": null,
+                    "details": {
+                      "sender_name": "",
+                      "sender_email": "",
+                      "reply_to": [],
+                      "subject": "Invoice {invoice_number}",
+                      "body_html": "<p>Your invoice is ready.</p>"
+                    },
+                    "provider_ready": true,
+                    "error": "",
+                    "deliveries": []
+                  }
+                }
+              }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "operationId": "updateInvoiceEmailSender",
+        "tags": [
+          "Invoice Email Sender"
+        ],
+        "summary": "Manage invoice email sender",
+        "x-ar-summary": "إدارة مرسل بريد الفواتير",
+        "description": "Updates the account-wide invoice email sender settings using the specified action. Sandbox keys are read-only.\n\nUse save_draft to retain setup progress and preview to render a template without sending mail. The save action requires details.sender_name and details.sender_email. Supply reply_to as an array of addresses on the exact sender domain. Templates use details.subject and details.body_html.\n\nVerify account DNS proof and sending-domain records before activate. Read the current revision before sender changes, and draft_revision before draft changes. Verification does not activate sending. Optional attachment-free tests go to the verified sender inbox; read test_status before repeating an uncertain test. Document delivery also requires the account’s current email permissions.",
+        "x-ar-description": "يعدّل إعدادات مرسل بريد الفواتير للحساب وفق الإجراء المحدد. المفتاح التجريبي للقراءة فقط.\n\nاستخدم save_draft لحفظ تقدم الإعداد وpreview لمعاينة القالب دون إرسال رسالة. يتطلب الإجراء save اسم المرسل وبريده في details.sender_name وdetails.sender_email. أرسل reply_to كمصفوفة عناوين تطابق نطاق المرسل تمامًا. تستخدم القوالب details.subject وdetails.body_html.\n\nتحقق من إثبات ملكية النطاق وسجلات الإرسال قبل activate. اقرأ revision الحالية قبل تعديل المرسل وdraft_revision قبل تعديل المسودة. لا يفعّل التحقق الإرسال تلقائيًا. ترسل الاختبارات الاختيارية دون مرفقات إلى بريد المرسل المتحقق منه؛ اقرأ test_status قبل تكرار اختبار غير مؤكد النتيجة. يخضع إرسال المستندات أيضًا لأذونات البريد الحالية للحساب.",
+        "responses": {
+          "200": {
+            "description": "Successful result or business-rule error. Check the boolean status field; status=false indicates failure even when HTTP status is 200.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                },
+                "example": {
+                  "status": true,
+                  "response": {
+                    "subject": "Invoice TEST-001",
+                    "html": "<!doctype html><html><body><p>Your invoice is ready.</p></body></html>"
+                  }
+                }
+              }
+            },
+            "x-ar-description": "نتيجة الطلب أو خطأ في قواعد المعالجة. تحقق من الحقل المنطقي status؛ تعني status=false فشل الطلب حتى إذا كانت حالة HTTP هي 200."
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SenderRequest"
+              },
+              "example": {
+                "action": "preview",
+                "details": {
+                  "subject": "Invoice {invoice_number}",
+                  "body_html": "<p>Your invoice is ready.</p>"
+                }
+              }
+            }
           }
         }
       }
@@ -2212,7 +2839,8 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-API-Key",
-        "description": "Use the live API key for live data or the sandbox API key for test data."
+        "description": "Use the live API key for live data or the sandbox API key for test data.",
+        "x-ar-description": "استخدم مفتاح الإنتاج للبيانات الفعلية والمفتاح التجريبي لبيانات الاختبار."
       }
     },
     "parameters": {
@@ -2306,7 +2934,8 @@
               }
             }
           }
-        }
+        },
+        "x-ar-description": "تمت معالجة الطلب."
       },
       "ValidationError": {
         "description": "Invalid request data",
@@ -2322,7 +2951,8 @@
               ]
             }
           }
-        }
+        },
+        "x-ar-description": "بيانات الطلب غير صالحة."
       },
       "Forbidden": {
         "description": "API key is missing or invalid",
@@ -2336,7 +2966,8 @@
               "response": "Invalid API key"
             }
           }
-        }
+        },
+        "x-ar-description": "مفتاح API مفقود أو غير صالح."
       }
     },
     "schemas": {
@@ -2349,9 +2980,7 @@
           "status": {
             "type": "boolean"
           },
-          "response": {
-            "nullable": true
-          },
+          "response": {},
           "message": {
             "type": "string"
           }
@@ -2382,7 +3011,8 @@
           },
           "registration_journey_id": {
             "type": "string",
-            "description": "A unique id generated by the integrating system for this registration attempt."
+            "description": "A unique id generated by the integrating system for this registration attempt.",
+            "x-ar-description": "معرّف فريد ينشئه النظام المتكامل لمحاولة التسجيل الحالية."
           }
         }
       },
@@ -2500,7 +3130,8 @@
         "properties": {
           "user_name": {
             "type": "string",
-            "description": "Account email address"
+            "description": "Account email address",
+            "x-ar-description": "البريد الإلكتروني للحساب."
           },
           "user_pass": {
             "type": "string",
@@ -2596,6 +3227,163 @@
               0,
               1
             ]
+          },
+          "zero_vat_default": {
+            "type": "object",
+            "required": [
+              "reason_code"
+            ],
+            "description": "Saved account default. Send null to clear. Read it and explicitly copy the applicable classification to invoice lines; API creation does not apply or change it automatically.",
+            "x-ar-description": "تصنيف افتراضي للحساب. null لمسحه. يقرأ ويضاف صراحة إلى البنود المنطبقة؛ إنشاء الفاتورة عبر API لا يطبقه أو يغيره تلقائيًا.",
+            "properties": {
+              "category": {
+                "type": "string",
+                "enum": [
+                  "Z",
+                  "E",
+                  "O"
+                ],
+                "description": "Z = zero-rated; E = exempt; O = outside scope. Omit to derive from reason_code.",
+                "x-ar-description": "Z خاضع لنسبة الصفر؛ E معفى؛ O خارج النطاق. يمكن اشتقاقه من رمز السبب."
+              },
+              "reason_code": {
+                "type": "string",
+                "enum": [
+                  "VATEX-SA-32",
+                  "VATEX-SA-33",
+                  "VATEX-SA-34-1",
+                  "VATEX-SA-34-2",
+                  "VATEX-SA-34-3",
+                  "VATEX-SA-34-4",
+                  "VATEX-SA-34-5",
+                  "VATEX-SA-35",
+                  "VATEX-SA-36",
+                  "VATEX-SA-EDU",
+                  "VATEX-SA-HEA",
+                  "VATEX-SA-MLTRY",
+                  "VATEX-SA-29",
+                  "VATEX-SA-29-7",
+                  "VATEX-SA-30",
+                  "VATEX-SA-OOS"
+                ],
+                "description": "Select the code that applies to the supply.",
+                "x-ar-description": "اختر الرمز المنطبق على التوريد."
+              },
+              "reason": {
+                "type": "string",
+                "maxLength": 500,
+                "description": "Required specific explanation for VATEX-SA-OOS. Other codes supply a standard description when omitted.",
+                "x-ar-description": "يلزم تفسير محدد للمعاملات خارج النطاق. تستخدم الرموز الأخرى الوصف القياسي عند حذفه."
+              }
+            },
+            "nullable": true
+          },
+          "invoice_logo": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "Legacy profile preference, retained for compatibility. It does not override the uploaded company logo. Use upload_profile_image to change that logo.",
+            "x-ar-description": "تفضيل قديم محفوظ للتوافق ولا يغير شعار الشركة المرفوع. استخدم upload_profile_image لتغيير الشعار.",
+            "deprecated": true
+          },
+          "show_simplified_customer_info": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 shows this information in generated PDFs; 0 hides it, subject to required invoice information.",
+            "x-ar-description": "1 لإظهار المعلومة في PDF و0 لإخفائها، مع مراعاة البيانات الإلزامية."
+          },
+          "show_pdf_item_id": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 shows this information in generated PDFs; 0 hides it, subject to required invoice information.",
+            "x-ar-description": "1 لإظهار المعلومة في PDF و0 لإخفائها، مع مراعاة البيانات الإلزامية."
+          },
+          "show_pdf_issuer_address": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 shows this information in generated PDFs; 0 hides it, subject to required invoice information.",
+            "x-ar-description": "1 لإظهار المعلومة في PDF و0 لإخفائها، مع مراعاة البيانات الإلزامية."
+          },
+          "show_pdf_issuer_mobile": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 shows this information in generated PDFs; 0 hides it, subject to required invoice information.",
+            "x-ar-description": "1 لإظهار المعلومة في PDF و0 لإخفائها، مع مراعاة البيانات الإلزامية."
+          },
+          "show_pdf_issuer_email": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 shows this information in generated PDFs; 0 hides it, subject to required invoice information.",
+            "x-ar-description": "1 لإظهار المعلومة في PDF و0 لإخفائها، مع مراعاة البيانات الإلزامية."
+          },
+          "show_pdf_customer_address": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 shows this information in generated PDFs; 0 hides it, subject to required invoice information.",
+            "x-ar-description": "1 لإظهار المعلومة في PDF و0 لإخفائها، مع مراعاة البيانات الإلزامية."
+          },
+          "show_pdf_customer_mobile": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 shows this information in generated PDFs; 0 hides it, subject to required invoice information.",
+            "x-ar-description": "1 لإظهار المعلومة في PDF و0 لإخفائها، مع مراعاة البيانات الإلزامية."
+          },
+          "show_pdf_customer_email": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 shows this information in generated PDFs; 0 hides it, subject to required invoice information.",
+            "x-ar-description": "1 لإظهار المعلومة في PDF و0 لإخفائها، مع مراعاة البيانات الإلزامية."
+          },
+          "district": {
+            "type": "string",
+            "description": "Business address component. Phase 2 identity restrictions apply.",
+            "x-ar-description": "جزء من عنوان المنشأة. تخضع التعديلات لقيود هوية المرحلة الثانية."
+          },
+          "building_number": {
+            "type": "string",
+            "description": "Business address component. Phase 2 identity restrictions apply.",
+            "x-ar-description": "جزء من عنوان المنشأة. تخضع التعديلات لقيود هوية المرحلة الثانية."
+          },
+          "city": {
+            "type": "string",
+            "description": "Business address component. Phase 2 identity restrictions apply.",
+            "x-ar-description": "جزء من عنوان المنشأة. تخضع التعديلات لقيود هوية المرحلة الثانية."
+          },
+          "postal_code": {
+            "type": "string",
+            "description": "Business address component. Phase 2 identity restrictions apply.",
+            "x-ar-description": "جزء من عنوان المنشأة. تخضع التعديلات لقيود هوية المرحلة الثانية."
+          },
+          "street_name": {
+            "type": "string",
+            "description": "Business address component. Phase 2 identity restrictions apply.",
+            "x-ar-description": "جزء من عنوان المنشأة. تخضع التعديلات لقيود هوية المرحلة الثانية."
           }
         }
       },
@@ -2634,7 +3422,8 @@
           },
           "category_id": {
             "type": "string",
-            "description": "One or more numeric category ids separated by commas."
+            "description": "One or more numeric category ids separated by commas.",
+            "x-ar-description": "معرّف تصنيف رقمي واحد أو أكثر، مفصولة بفواصل."
           }
         }
       },
@@ -2716,8 +3505,15 @@
             "minimum": 0
           },
           "quantity": {
-            "type": "integer",
-            "minimum": 1
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "multipleOf": 1e-06,
+            "description": "Positive quantity. Fractional quantities are supported with up to 6 decimal places.",
+            "example": 1.5,
+            "maximum": 1000000000000,
+            "exclusiveMaximum": true,
+            "x-ar-description": "كمية موجبة. تدعم الكسور حتى ست منازل عشرية."
           },
           "vat_percent_product": {
             "type": "number",
@@ -2726,11 +3522,42 @@
           },
           "vat_percent": {
             "type": "number",
-            "minimum": 0
+            "minimum": 0,
+            "description": "VAT percentage. Takes precedence over vat_percent_product when supplied.",
+            "x-ar-description": "نسبة ضريبة القيمة المضافة. تستخدم بدلًا من vat_percent_product عند إرسالها."
           },
           "discount_percent": {
             "type": "number",
             "minimum": 0
+          },
+          "zero_vat": {
+            "$ref": "#/components/schemas/ZeroVatClassification"
+          },
+          "product_id": {
+            "type": "string",
+            "description": "Optional item identifier printed when the profile enables Item ID.",
+            "x-ar-description": "معرّف اختياري للصنف يظهر عند تفعيل عرضه."
+          },
+          "discount_type": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "description": "1 = percentage; 2 = fixed amount per unit. Use with discount_value.",
+            "x-ar-description": "1 نسبة مئوية؛ 2 مبلغ ثابت لكل وحدة. يستخدم مع discount_value."
+          },
+          "discount_value": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Discount percentage or per-unit amount according to discount_type.",
+            "x-ar-description": "نسبة الخصم أو مبلغه لكل وحدة بحسب نوعه."
+          },
+          "total_discount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Alternative fixed discount for the entire line. Supply one discount representation per line.",
+            "x-ar-description": "خصم ثابت بديل للبند كاملًا. استخدم طريقة خصم واحدة لكل بند."
           }
         }
       },
@@ -2750,7 +3577,8 @@
               3,
               4
             ],
-            "description": "0 simplified invoice, 1 standard invoice, 2 purchase invoice, 3 credit note, 4 debit note."
+            "description": "0 simplified invoice, 1 standard invoice, 2 purchase invoice, 3 credit note, 4 debit note.",
+            "x-ar-description": "0 فاتورة مبسطة، 1 فاتورة قياسية، 2 فاتورة مشتريات، 3 إشعار دائن، 4 إشعار مدين."
           },
           "client_type": {
             "type": "integer",
@@ -2785,31 +3613,37 @@
           },
           "date_time": {
             "type": "string",
-            "description": "YYYY-MM-DD HH:MM:SS or ISO 8601. Defaults to the current time when omitted."
+            "description": "Accepted for compatibility and validated when supplied. Issue date/time is always assigned by the server in Asia/Riyadh. Use transaction_date for a separate supply/purchase date.",
+            "x-ar-description": "يقبل للتوافق ويتحقق من تنسيقه، لكن الخادم يحدد وقت الإصدار بتوقيت الرياض. استخدم transaction_date لتاريخ التوريد أو الشراء."
           },
           "reference_number": {
             "type": "string"
           },
           "parent_invoice_number": {
             "type": "string",
-            "description": "Required for credit and debit notes. Use the invoice_number returned for the original document in the same API-key environment."
+            "description": "Required for credit and debit notes. Use the invoice_number returned for the original document in the same API-key environment.",
+            "x-ar-description": "مطلوب للإشعارات الدائنة والمدينة. استخدم invoice_number للمستند الأصلي في بيئة مفتاح API نفسها."
           },
           "document_reason": {
             "type": "string",
-            "description": "Reason for a credit or debit note."
+            "description": "Reason for a credit or debit note.",
+            "x-ar-description": "سبب إصدار الإشعار الدائن أو المدين."
           },
           "created_type": {
             "type": "string",
-            "description": "Optional source channel identifier."
+            "description": "Optional source channel identifier.",
+            "x-ar-description": "معرّف اختياري لقناة المصدر."
           },
           "source_uid": {
             "type": "string",
-            "description": "Optional source record identifier for supported connector channels."
+            "description": "Optional source record identifier for supported connector channels.",
+            "x-ar-description": "معرّف اختياري لسجل المصدر في قنوات التكامل المدعومة."
           },
           "draft_id": {
             "type": "integer",
             "minimum": 1,
-            "description": "Optional quotation id to mark as converted after this document is created. Use with created_type=quotation and source_uid=quotation:{id}."
+            "description": "Optional quotation id to mark as converted after this document is created. Use with created_type=quotation and source_uid=quotation:{id}.",
+            "x-ar-description": "معرّف اختياري لعرض السعر الذي سيصبح محوّلًا بعد إنشاء المستند. استخدمه مع created_type=quotation وsource_uid=quotation:{id}."
           },
           "invoice_detail": {
             "type": "array",
@@ -2817,6 +3651,114 @@
             "items": {
               "$ref": "#/components/schemas/InvoiceLine"
             }
+          },
+          "zero_vat_version": {
+            "type": "integer",
+            "enum": [
+              1
+            ],
+            "description": "Set to 1 to require a valid classification on every zero-rate tax sales line. Existing clients that omit it retain compatibility validation.",
+            "x-ar-description": "القيمة 1 تلزم تصنيفًا صالحًا لكل بند مبيعات ضريبي بنسبة صفر. يحافظ حذفها على التحقق المتوافق مع العملاء السابقين."
+          },
+          "transaction_date_mode": {
+            "type": "string",
+            "enum": [
+              "current",
+              "previous"
+            ],
+            "description": "current uses the server date in Asia/Riyadh; previous requires transaction_date before today. Sales and purchases only.",
+            "x-ar-description": "current يستخدم تاريخ الخادم بتوقيت الرياض؛ previous يتطلب تاريخًا سابقًا لليوم. للمبيعات والمشتريات فقط."
+          },
+          "transaction_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "description": "Supply date for sales or purchase date for purchases. YYYY-MM-DD. Reports use this date; notes use their own issue date.",
+            "x-ar-description": "تاريخ التوريد للمبيعات أو تاريخ الشراء للمشتريات. تستخدمه التقارير، بينما تستخدم الإشعارات تاريخ إصدارها."
+          },
+          "buyer_country": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "example": "AE",
+            "description": "ISO 3166-1 alpha-2 country. Required foreign country for exports.",
+            "x-ar-description": "رمز الدولة المكون من حرفين وفق ISO 3166-1. يلزم بلد أجنبي للتصدير."
+          },
+          "currency": {
+            "type": "string",
+            "example": "SAR",
+            "description": "ISO 4217 currency. Defaults to SAR. Stored document totals are in SAR; original_currency and converted_value describe the original currency and conversion.",
+            "x-ar-description": "عملة ISO 4217، والافتراضي SAR. تحفظ إجماليات المستند بالريال مع بيانات العملة الأصلية وسعر التحويل."
+          },
+          "shipping_charge": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Shipping amount in the request currency.",
+            "x-ar-description": "قيمة الشحن بعملة الطلب."
+          },
+          "shipping_taxable": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "Whether shipping is taxable at the document shipping rate.",
+            "x-ar-description": "هل يخضع الشحن لمعدل الضريبة المستخدم للمستند."
+          },
+          "extra_discount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Document-level discount. Use item discounts for mixed zero categories or outside-scope items.",
+            "x-ar-description": "خصم على مستوى المستند. استخدم خصم البنود عند تعدد تصنيفات الصفر أو وجود بنود خارج النطاق."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Notes for this document. Blank or omitted uses the profile default; does not update that default.",
+            "x-ar-description": "ملاحظات هذا المستند. يستخدم الافتراضي عند الحذف أو الفراغ دون تحديثه."
+          },
+          "footer_text": {
+            "type": "string",
+            "description": "Terms for this document. Blank or omitted uses the profile default.",
+            "x-ar-description": "شروط هذا المستند. يستخدم الافتراضي عند الحذف أو الفراغ."
+          },
+          "street_name": {
+            "type": "string",
+            "description": "Counterparty street; required for exports.",
+            "x-ar-description": "شارع الطرف المقابل؛ مطلوب للتصدير."
+          },
+          "city": {
+            "type": "string",
+            "description": "Counterparty city; required for exports.",
+            "x-ar-description": "مدينة الطرف المقابل؛ مطلوبة للتصدير."
+          },
+          "district": {
+            "type": "string",
+            "description": "Counterparty district.",
+            "x-ar-description": "حي الطرف المقابل."
+          },
+          "building_number": {
+            "type": "string",
+            "description": "Counterparty building number.",
+            "x-ar-description": "رقم مبنى الطرف المقابل."
+          },
+          "postal_code": {
+            "type": "string",
+            "description": "Counterparty postal code.",
+            "x-ar-description": "الرمز البريدي للطرف المقابل."
+          },
+          "client_cr_number": {
+            "type": "string",
+            "description": "Counterparty commercial registration.",
+            "x-ar-description": "السجل التجاري للطرف المقابل."
+          },
+          "client_contact_number": {
+            "type": "string",
+            "description": "Counterparty phone number without calling code.",
+            "x-ar-description": "هاتف الطرف المقابل دون مفتاح الدولة."
+          },
+          "client_country_code": {
+            "type": "string",
+            "description": "Phone calling code; distinct from buyer_country.",
+            "x-ar-description": "مفتاح الاتصال، ويختلف عن رمز دولة المشتري."
           }
         }
       },
@@ -2868,12 +3810,14 @@
           "start_date": {
             "type": "string",
             "format": "date",
-            "description": "Optional. Supply together with end_date; omit both for all dates."
+            "description": "Optional. Supply together with end_date; omit both for all dates.",
+            "x-ar-description": "اختياري. أرسله مع end_date، أو احذف التاريخين لتضمين جميع التواريخ."
           },
           "end_date": {
             "type": "string",
             "format": "date",
-            "description": "Optional. Supply together with start_date; omit both for all dates."
+            "description": "Optional. Supply together with start_date; omit both for all dates.",
+            "x-ar-description": "اختياري. أرسله مع start_date، أو احذف التاريخين لتضمين جميع التواريخ."
           },
           "invoice_types": {
             "type": "array",
@@ -2887,7 +3831,13 @@
                 4
               ]
             },
-            "description": "Optional. Omit to include every issued invoice/note type."
+            "description": "Optional. Omit to include every issued invoice/note type.",
+            "x-ar-description": "اختياري. احذفه لتضمين جميع أنواع الفواتير والإشعارات الصادرة."
+          },
+          "cursor": {
+            "type": "string",
+            "description": "Continuation token from X-SF-Archive-Next or archive-info.json. Keep format unchanged; filters are frozen in the token. Omit to start a new export.",
+            "x-ar-description": "رمز المتابعة من الترويسة أو archive-info.json. يحفظ مرشحات التصدير. يحذف لبدء تصدير جديد."
           }
         }
       },
@@ -2899,7 +3849,11 @@
         "properties": {
           "json_data": {
             "type": "string",
-            "description": "The complete quotation payload encoded as a JSON string."
+            "description": "JSON-encoded QuotationPayload. Use vat_percent on quotation lines. No supply/purchase date applies until conversion.",
+            "x-ar-description": "كائن QuotationPayload مرمز كنص JSON. تستخدم البنود vat_percent. يحدد تاريخ التوريد أو الشراء عند التحويل.",
+            "x-content-schema": {
+              "$ref": "#/components/schemas/QuotationPayload"
+            }
           },
           "environment": {
             "type": "string",
@@ -2907,7 +3861,8 @@
               "live",
               "sandbox"
             ],
-            "description": "The API key remains authoritative for the environment."
+            "description": "The API key remains authoritative for the environment.",
+            "x-ar-description": "يحدد مفتاح API البيئة المستخدمة."
           }
         }
       },
@@ -2978,7 +3933,13 @@
             "type": "object",
             "properties": {
               "type": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "revenue_dashboard",
+                  "sale_report",
+                  "purchase_report",
+                  "vat_report"
+                ]
               }
             }
           }
@@ -3071,7 +4032,576 @@
             "example": "api"
           }
         }
+      },
+      "ZeroVatClassification": {
+        "type": "object",
+        "required": [
+          "reason_code"
+        ],
+        "description": "Classification of a zero-rate sales line. The business selects the applicable treatment. Codes follow the ZATCA XML Implementation Standard 1.2, section 11.2.4.",
+        "x-ar-description": "تصنيف بند مبيعات بضريبة صفرية. تختار المنشأة المعالجة المنطبقة وفق القسم 11.2.4 من معيار زاتكا لتنفيذ XML الإصدار 1.2.",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "Z",
+              "E",
+              "O"
+            ],
+            "description": "Z = zero-rated; E = exempt; O = outside scope. Omit to derive from reason_code.",
+            "x-ar-description": "Z خاضع لنسبة الصفر؛ E معفى؛ O خارج النطاق. يمكن اشتقاقه من رمز السبب."
+          },
+          "reason_code": {
+            "type": "string",
+            "enum": [
+              "VATEX-SA-32",
+              "VATEX-SA-33",
+              "VATEX-SA-34-1",
+              "VATEX-SA-34-2",
+              "VATEX-SA-34-3",
+              "VATEX-SA-34-4",
+              "VATEX-SA-34-5",
+              "VATEX-SA-35",
+              "VATEX-SA-36",
+              "VATEX-SA-EDU",
+              "VATEX-SA-HEA",
+              "VATEX-SA-MLTRY",
+              "VATEX-SA-29",
+              "VATEX-SA-29-7",
+              "VATEX-SA-30",
+              "VATEX-SA-OOS"
+            ],
+            "description": "Select the code that applies to the supply.",
+            "x-ar-description": "اختر الرمز المنطبق على التوريد."
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Required specific explanation for VATEX-SA-OOS. Other codes supply a standard description when omitted.",
+            "x-ar-description": "يلزم تفسير محدد للمعاملات خارج النطاق. تستخدم الرموز الأخرى الوصف القياسي عند حذفه."
+          }
+        }
+      },
+      "QuotationPayload": {
+        "type": "object",
+        "required": [
+          "document_kind",
+          "invoice_detail"
+        ],
+        "properties": {
+          "document_kind": {
+            "type": "string",
+            "enum": [
+              "quotation"
+            ]
+          },
+          "client_type": {
+            "type": "integer",
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          "client_name": {
+            "type": "string"
+          },
+          "client_address": {
+            "type": "string"
+          },
+          "client_email_id": {
+            "type": "string",
+            "format": "email"
+          },
+          "client_vat_number": {
+            "type": "string"
+          },
+          "buyer_country": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "example": "AE",
+            "description": "ISO 3166-1 alpha-2 country. Required foreign country for exports.",
+            "x-ar-description": "رمز الدولة المكون من حرفين وفق ISO 3166-1. يلزم بلد أجنبي للتصدير."
+          },
+          "street_name": {
+            "type": "string",
+            "description": "Counterparty street; required for exports.",
+            "x-ar-description": "شارع الطرف المقابل؛ مطلوب للتصدير."
+          },
+          "city": {
+            "type": "string",
+            "description": "Counterparty city; required for exports.",
+            "x-ar-description": "مدينة الطرف المقابل؛ مطلوبة للتصدير."
+          },
+          "district": {
+            "type": "string",
+            "description": "Counterparty district.",
+            "x-ar-description": "حي الطرف المقابل."
+          },
+          "building_number": {
+            "type": "string",
+            "description": "Counterparty building number.",
+            "x-ar-description": "رقم مبنى الطرف المقابل."
+          },
+          "postal_code": {
+            "type": "string",
+            "description": "Counterparty postal code.",
+            "x-ar-description": "الرمز البريدي للطرف المقابل."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Notes for this document. Blank or omitted uses the profile default; does not update that default.",
+            "x-ar-description": "ملاحظات هذا المستند. يستخدم الافتراضي عند الحذف أو الفراغ دون تحديثه."
+          },
+          "footer_text": {
+            "type": "string",
+            "description": "Terms for this document. Blank or omitted uses the profile default.",
+            "x-ar-description": "شروط هذا المستند. يستخدم الافتراضي عند الحذف أو الفراغ."
+          },
+          "invoice_detail": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/QuotationLine"
+            }
+          },
+          "company_name": {
+            "type": "string",
+            "description": "Business counterparty name.",
+            "x-ar-description": "اسم منشأة الطرف المقابل."
+          },
+          "buyer_name": {
+            "type": "string",
+            "description": "Individual counterparty name.",
+            "x-ar-description": "اسم الفرد الطرف المقابل."
+          }
+        }
+      },
+      "DocumentExcelRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DateRangeRequest"
+          },
+          {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "sale_report",
+                  "purchase_report"
+                ]
+              },
+              "lang": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "ar"
+                ],
+                "default": "en"
+              }
+            }
+          }
+        ]
+      },
+      "VatExcelRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DateRangeRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "lang": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "ar"
+                ],
+                "default": "en"
+              }
+            }
+          }
+        ]
+      },
+      "SenderRequest": {
+        "type": "object",
+        "required": [
+          "action"
+        ],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "save_draft",
+              "preview",
+              "save_template",
+              "save_active",
+              "save",
+              "disable",
+              "verify",
+              "activate",
+              "test"
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "description": "Current sender revision; required for verification, activation and tests.",
+            "x-ar-description": "مراجعة المرسل الحالية؛ تلزم للتحقق والتفعيل والاختبار."
+          },
+          "draft_revision": {
+            "type": "integer",
+            "description": "Current draft revision for draft edits.",
+            "x-ar-description": "مراجعة المسودة الحالية."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "default",
+              "custom"
+            ]
+          },
+          "step": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "details": {
+            "type": "object",
+            "description": "Sender fields for save, save_active, save_template, save_draft and preview. Templates accept {document_type}, {invoice_number}, {customer_name}, {receiver_name}, {company_name}, {total_amount}, {vat_amount}, {currency}, {invoice_date}.",
+            "properties": {
+              "sender_name": {
+                "type": "string"
+              },
+              "sender_email": {
+                "type": "string"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "body_html": {
+                "type": "string"
+              },
+              "reply_to": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "email"
+                }
+              }
+            },
+            "x-ar-description": "حقول المرسل للإجراءات المحددة. تستخدم القوالب المتغيرات المبينة بين أقواس مفردة."
+          }
+        }
+      },
+      "Document": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "invoice_number": {
+            "type": "string"
+          },
+          "invoice_type_code": {
+            "type": "integer"
+          },
+          "invoice_type": {
+            "description": "Numeric in document detail; legacy text in create responses. Use invoice_type_code in create responses.",
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "x-ar-description": "قيمة رقمية في تفاصيل المستند ونص قديم في استجابة الإنشاء. استخدم invoice_type_code في استجابة الإنشاء."
+          },
+          "document_label": {
+            "type": "string"
+          },
+          "document_label_ar": {
+            "type": "string"
+          },
+          "seller_tax_status": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "vat_registered",
+              "non_vat"
+            ]
+          },
+          "is_tax_document": {
+            "type": "boolean"
+          },
+          "date_time": {
+            "type": "string",
+            "description": "Immutable issue time, Asia/Riyadh.",
+            "x-ar-description": "وقت الإصدار الثابت بتوقيت الرياض."
+          },
+          "transaction_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "tax_metadata": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "buyer_country": {
+                "type": "string"
+              },
+              "buyer_identifier": {
+                "type": "string"
+              }
+            }
+          },
+          "original_currency": {
+            "type": "string"
+          },
+          "converted_value": {
+            "type": "number"
+          },
+          "vat": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "footer_text": {
+            "type": "string",
+            "nullable": true
+          },
+          "environment": {
+            "type": "string",
+            "enum": [
+              "live",
+              "sandbox"
+            ]
+          },
+          "zatca_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "pdf_ready": {
+            "type": "boolean"
+          },
+          "xml_available": {
+            "type": "boolean"
+          },
+          "pdf_download_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "xml_download_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "idempotent_replay": {
+            "type": "boolean"
+          },
+          "invoice_details": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/InvoiceLine"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "vat": {
+                      "type": "number"
+                    },
+                    "total": {
+                      "type": "number"
+                    },
+                    "discount": {
+                      "type": "number"
+                    },
+                    "net_amount": {
+                      "type": "number"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "status": {
+            "type": "integer",
+            "description": "Stored document state. In the direct invoice-number lookup response this is not the boolean API envelope status.",
+            "x-ar-description": "حالة المستند المحفوظة. في استجابة البحث المباشر برقم الفاتورة، تختلف عن الحقل المنطقي status المستخدم لنتيجة الطلب."
+          }
+        }
+      },
+      "DocumentResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "response": {
+            "$ref": "#/components/schemas/Document"
+          }
+        }
+      },
+      "QuotationLine": {
+        "type": "object",
+        "required": [
+          "description",
+          "unit_price",
+          "quantity"
+        ],
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "unit_price": {
+            "type": "number",
+            "minimum": 0
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true,
+            "multipleOf": 1e-06,
+            "description": "Positive quantity. Fractional quantities are supported with up to 6 decimal places.",
+            "example": 1.5,
+            "maximum": 1000000000000,
+            "exclusiveMaximum": true,
+            "x-ar-description": "كمية موجبة. تدعم الكسور حتى ست منازل عشرية."
+          },
+          "vat_percent": {
+            "type": "number",
+            "minimum": 0,
+            "description": "VAT percentage. Takes precedence over vat_percent_product when supplied.",
+            "x-ar-description": "نسبة ضريبة القيمة المضافة. تستخدم بدلًا من vat_percent_product عند إرسالها."
+          },
+          "discount_percent": {
+            "type": "number",
+            "minimum": 0
+          },
+          "zero_vat": {
+            "$ref": "#/components/schemas/ZeroVatClassification"
+          },
+          "product_id": {
+            "type": "string",
+            "description": "Optional item identifier printed when the profile enables Item ID.",
+            "x-ar-description": "معرّف اختياري للصنف يظهر عند تفعيل عرضه."
+          }
+        }
       }
     }
+  },
+  "x-zero-vat-codes": [
+    {
+      "code": "VATEX-SA-32",
+      "category": "Z",
+      "description": "Export of goods",
+      "x-ar-description": "تصدير السلع"
+    },
+    {
+      "code": "VATEX-SA-33",
+      "category": "Z",
+      "description": "Export of services",
+      "x-ar-description": "تصدير الخدمات"
+    },
+    {
+      "code": "VATEX-SA-34-1",
+      "category": "Z",
+      "description": "International transport of goods",
+      "x-ar-description": "النقل الدولي للسلع"
+    },
+    {
+      "code": "VATEX-SA-34-2",
+      "category": "Z",
+      "description": "International transport of passengers",
+      "x-ar-description": "النقل الدولي للركاب"
+    },
+    {
+      "code": "VATEX-SA-34-3",
+      "category": "Z",
+      "description": "Services incidental to international passenger transport",
+      "x-ar-description": "الخدمات المرتبطة مباشرة بالنقل الدولي للركاب"
+    },
+    {
+      "code": "VATEX-SA-34-4",
+      "category": "Z",
+      "description": "Supply of qualifying means of transport",
+      "x-ar-description": "توريد وسائل النقل المؤهلة"
+    },
+    {
+      "code": "VATEX-SA-34-5",
+      "category": "Z",
+      "description": "Services relating to goods or passenger transport (Article 25)",
+      "x-ar-description": "الخدمات المتعلقة بنقل السلع أو الركاب وفق المادة 25"
+    },
+    {
+      "code": "VATEX-SA-35",
+      "category": "Z",
+      "description": "Medicines and medical equipment",
+      "x-ar-description": "أدوية ومعدات طبية مؤهلة"
+    },
+    {
+      "code": "VATEX-SA-36",
+      "category": "Z",
+      "description": "Qualifying metals",
+      "x-ar-description": "معادن مؤهلة"
+    },
+    {
+      "code": "VATEX-SA-EDU",
+      "category": "Z",
+      "description": "Private education for Saudi citizens",
+      "x-ar-description": "التعليم الأهلي للمواطنين السعوديين"
+    },
+    {
+      "code": "VATEX-SA-HEA",
+      "category": "Z",
+      "description": "Private healthcare for Saudi citizens",
+      "x-ar-description": "الرعاية الصحية الخاصة للمواطنين السعوديين"
+    },
+    {
+      "code": "VATEX-SA-MLTRY",
+      "category": "Z",
+      "description": "Supply of qualifying military goods",
+      "x-ar-description": "توريد السلع العسكرية المؤهلة"
+    },
+    {
+      "code": "VATEX-SA-29",
+      "category": "E",
+      "description": "Exempt financial services (Article 29)",
+      "x-ar-description": "الخدمات المالية المعفاة وفق المادة 29"
+    },
+    {
+      "code": "VATEX-SA-29-7",
+      "category": "E",
+      "description": "Life insurance services (Article 29)",
+      "x-ar-description": "خدمات التأمين على الحياة وفق المادة 29"
+    },
+    {
+      "code": "VATEX-SA-30",
+      "category": "E",
+      "description": "Exempt real estate transactions (Article 30)",
+      "x-ar-description": "المعاملات العقارية المعفاة وفق المادة 30"
+    },
+    {
+      "code": "VATEX-SA-OOS",
+      "category": "O",
+      "description": "Outside the scope of VAT",
+      "x-ar-description": "خارج نطاق ضريبة القيمة المضافة"
+    }
+  ],
+  "externalDocs": {
+    "description": "ZATCA electronic invoice specifications",
+    "url": "https://www.zatca.gov.sa/en/E-Invoicing/SystemsDevelopers/Pages/E-Invoice-specifications.aspx",
+    "x-ar-description": "مواصفات الفاتورة الإلكترونية لدى زاتكا."
   }
 }

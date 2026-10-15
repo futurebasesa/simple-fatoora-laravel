@@ -10,6 +10,7 @@ use SimpleFatoora\Laravel\Http\HttpTransport;
 use SimpleFatoora\Laravel\Resources\AccountResource;
 use SimpleFatoora\Laravel\Resources\ClientsResource;
 use SimpleFatoora\Laravel\Resources\DocumentsResource;
+use SimpleFatoora\Laravel\Resources\InvoiceEmailSenderResource;
 use SimpleFatoora\Laravel\Resources\ProductsResource;
 use SimpleFatoora\Laravel\Resources\ProfileResource;
 use SimpleFatoora\Laravel\Resources\QuotationsResource;
@@ -18,7 +19,7 @@ use SimpleFatoora\Laravel\Resources\ZatcaPhase2Resource;
 
 final readonly class SimpleFatooraClient
 {
-    public const VERSION = '0.1.0';
+    public const VERSION = '0.2.0';
 
     public function __construct(
         private HttpTransport $transport,
@@ -76,6 +77,11 @@ final readonly class SimpleFatooraClient
     public function reports(): ReportsResource
     {
         return new ReportsResource($this->transport);
+    }
+
+    public function invoiceEmailSender(): InvoiceEmailSenderResource
+    {
+        return new InvoiceEmailSenderResource($this->transport);
     }
 
     public function zatcaPhase2(): ZatcaPhase2Resource

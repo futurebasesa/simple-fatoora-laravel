@@ -46,9 +46,17 @@ enum Endpoint: string
     case RefreshZatcaPhase2Status = 'refreshZatcaPhase2Status';
     case RenewZatcaPhase2 = 'renewZatcaPhase2';
 
+    case GetInvoiceByNumber = 'getInvoiceByNumber';
+    case ExportDocumentsExcel = 'exportDocumentsExcel';
+    case ExportVatExcel = 'exportVatExcel';
+    case GetInvoiceEmailSender = 'getInvoiceEmailSender';
+    case UpdateInvoiceEmailSender = 'updateInvoiceEmailSender';
+
     public function method(): HttpMethod
     {
         return match ($this) {
+            self::GetInvoiceByNumber,
+            self::GetInvoiceEmailSender,
             self::GetBusinessProfile,
             self::ListClientCategories,
             self::GetClient,
@@ -68,6 +76,11 @@ enum Endpoint: string
     public function path(): string
     {
         return match ($this) {
+            self::GetInvoiceByNumber => '/invoice/get_byinvoice_number',
+            self::ExportDocumentsExcel => '/invoice/export_documents_excel',
+            self::ExportVatExcel => '/invoice/export_vat_excel',
+            self::GetInvoiceEmailSender => '/users/invoice-email-sender',
+            self::UpdateInvoiceEmailSender => '/users/invoice-email-sender',
             self::CreateRegistrationIntent => '/users/registration_intent',
             self::SendEmailOtp => '/users/email_send_otp',
             self::VerifyEmailOtp => '/users/email_verify_otp',
@@ -126,6 +139,8 @@ enum Endpoint: string
     public function isDownload(): bool
     {
         return in_array($this, [
+            self::ExportDocumentsExcel,
+            self::ExportVatExcel,
             self::DownloadInvoicePdf,
             self::DownloadInvoiceXml,
             self::ExportInvoiceArchive,
@@ -145,6 +160,7 @@ enum Endpoint: string
             self::DownloadQuotationPdf => 'application/pdf',
             self::DownloadInvoiceXml => 'application/xml',
             self::ExportInvoiceArchive => 'application/zip',
+            self::ExportDocumentsExcel, self::ExportVatExcel => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             default => 'application/json',
         };
     }

@@ -24,7 +24,7 @@ final class EndpointCoverageTest extends TestCase
             if (str_contains($path, '/xml/')) {
                 return Http::response('<Invoice/>', 200, ['Content-Type' => 'application/xml']);
             }
-            if (str_ends_with($path, '/archive/export')) {
+            if ((str_ends_with($path, '/archive/export') || str_ends_with($path, '_excel'))) {
                 return Http::response('PK-archive', 200, ['Content-Type' => 'application/zip']);
             }
 
@@ -81,6 +81,11 @@ final class EndpointCoverageTest extends TestCase
             $client->reports()->sales(['start_date' => '2026-01-01', 'end_date' => '2026-01-31']);
             $client->reports()->vatReturn(['start_date' => '2026-01-01', 'end_date' => '2026-03-31']);
 
+            $client->documents()->findByNumber('ST123-456');
+            $client->reports()->downloadDocumentsExcel(['start_date' => '2026-01-01', 'end_date' => '2026-01-31', 'type' => 'sale_report'], $downloads[] = $this->downloadPath('sales.xlsx'));
+            $client->reports()->downloadVatExcel(['start_date' => '2026-01-01', 'end_date' => '2026-03-31'], $downloads[] = $this->downloadPath('vat.xlsx'));
+            $client->invoiceEmailSender()->get();
+            $client->invoiceEmailSender()->update(['action' => 'preview']);
             $business = $this->zatcaBusinessPayload();
             $client->zatcaPhase2()->status();
             $client->zatcaPhase2()->saveDraft($business);
@@ -112,7 +117,7 @@ final class EndpointCoverageTest extends TestCase
             sort($actual);
             sort($expected);
 
-            self::assertCount(39, $actual);
+            self::assertCount(44, $actual);
             self::assertSame($expected, $actual);
         } finally {
             unlink($logo);

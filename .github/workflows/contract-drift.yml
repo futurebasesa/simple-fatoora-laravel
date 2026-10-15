@@ -1,6 +1,10 @@
 name: Contract Drift
 
 on:
+  schedule:
+    - cron: '0 7 * * 1'
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       openapi_url:
@@ -29,7 +33,9 @@ jobs:
         run: composer install --prefer-dist --no-interaction --no-progress
 
       - name: Download official contract
-        run: curl --fail --silent --show-error --location --max-time 30 "${{ inputs.openapi_url }}" --output "$RUNNER_TEMP/openapi.json"
+        env:
+          OPENAPI_URL: ${{ inputs.openapi_url || 'https://simplefatoora.com/developers/openapi.json' }}
+        run: curl --fail --silent --show-error --location --max-time 30 "$OPENAPI_URL" --output "$RUNNER_TEMP/openapi.json"
 
-      - name: Compare endpoint and request contract
+      - name: Compare endpoint, request and response contract
         run: php tools/compare-openapi.php resources/openapi.json "$RUNNER_TEMP/openapi.json"

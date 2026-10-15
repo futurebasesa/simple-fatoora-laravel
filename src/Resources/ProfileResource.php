@@ -11,6 +11,11 @@ use SimpleFatoora\Laravel\Support\Payload;
 
 final readonly class ProfileResource extends Resource
 {
+    public function clearZeroVatDefault(): ApiResponse
+    {
+        return $this->transport->request(Endpoint::UpdateBusinessProfile, payload: ['zero_vat_default' => null]);
+    }
+
     public function get(): ApiResponse
     {
         return $this->transport->request(Endpoint::GetBusinessProfile);

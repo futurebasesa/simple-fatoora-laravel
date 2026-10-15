@@ -11,5 +11,10 @@ final readonly class DownloadedFile
         public string $contentType,
         public ?string $filename,
         public int $size,
+        public ?string $nextCursor = null,
+        public int $part = 1,
+        public int $exported = 0,
+        public int $skipped = 0,
+        public bool $complete = true,
     ) {}
 }
